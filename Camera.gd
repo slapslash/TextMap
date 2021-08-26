@@ -14,11 +14,20 @@ is corresponding to this mechanic.
 """
 
 func _ready():
-	# center the camera to the cursor.
-	offset = Global.cell_size / 2
 	# TODO: drag margins need to be adjusted to the size of the cursor.
 	# But only, if dragging is used sometime in the future.
-	
+	_initial_zoom_and_positioning()
+
+func _initial_zoom_and_positioning():
+	"""
+	zoom out a litte bit, that a whole screen is visible and
+	position the camera, so that this screen is centered.
+	"""
+	var rect = get_camera_viewport_rect()
+	zoom = Vector2(1.1, 1.1)
+	var zoomed_rect = get_camera_viewport_rect()
+	var diff = zoomed_rect.size - rect.size
+	offset = -diff / 2
 
 func _input(event):
 	if event is InputEventMouseButton:
