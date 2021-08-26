@@ -64,8 +64,7 @@ func _input(event):
 		
 
 func _update_cursor():
-	position = Global.cell_size * Global.cell
-
+	global_position = Global.cell_size * Global.cell
 	
 func change_cell(add: Vector2):
 	Global.cell += add
