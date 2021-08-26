@@ -32,9 +32,9 @@ func _initial_zoom_and_positioning():
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
-			if event.button_index == BUTTON_WHEEL_DOWN:
+			if event.button_index == BUTTON_WHEEL_DOWN and zoom.x < 10:
 				zoom *= 1.1
-			elif event.button_index == BUTTON_WHEEL_UP:
+			elif event.button_index == BUTTON_WHEEL_UP and zoom.x > 0.1:
 				zoom *= 0.9
 			elif event.button_index == BUTTON_RIGHT:
 				if not _scroll:
