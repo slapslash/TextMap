@@ -14,8 +14,11 @@ is corresponding to this mechanic.
 """
 
 func _ready():
-	pass
+	# center the camera to the cursor.
+	offset = Global.cell_size / 2
+
 	# TODO: drag margins need to be adjusted to the size of the cursor.
+	# But only, if dragging is used sometimes.
 	
 func _input(event):
 	if event is InputEventMouseButton:
@@ -42,4 +45,5 @@ func _process(_delta):
 #	if offset:
 #		global_position = get_camera_screen_center()
 #		offset = Vector2.ZERO
-#		align()
+##		force_update_scroll()
+##		align()
