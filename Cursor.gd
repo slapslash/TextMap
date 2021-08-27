@@ -11,6 +11,22 @@ func _ready():
 
 	_update_cursor()
 
+func init_custom_cursor(zoom_level: float = 1.0):
+	"""
+	change cursor to something more suitable than the standard arrow.
+	TODO: sadly, the complete custom cursor isn't as easy to do, as not only
+	the camera zoom level applies, but also the 
+	"""
+#	pass
+	var tex = ImageTexture.new()
+	var img = Image.new()
+	var width = Global.cell_size.x / zoom_level
+	var height = Global.cell_size.y / zoom_level
+	img.create(width, height, true, Image.FORMAT_RGB8)
+	img.fill(Color.brown)
+	tex.create_from_image(img)
+	Input.set_custom_mouse_cursor(tex)
+
 
 func _input(event):
 	if event is InputEventMouseButton:
