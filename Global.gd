@@ -4,15 +4,22 @@ var font
 var cell_size = Vector2(0, 0)
 var cell = Vector2(0, 0)
 var matrix: Dictionary # y,x
+# size of a screen in characters. will affect grid... Is calculated
+# from the cell size/ font size.
+var screen_size_characters: Vector2 = Vector2(30, 8)
+# size of a screen in pixels. Is calculated from the cell size/ font size
+# and screen_size_characters.
+var screen_size_pixels: Vector2
 
 func _ready():
 	font = DynamicFont.new()
 	font.font_data = load('res://fonts/monogram_extended.ttf')
-	font.size = 16
+	font.size = 32
 
 	cell_size = _set_cell_size()
 	prints('using cell size:', cell_size)
 
+	screen_size_pixels = screen_size_characters * cell_size
 	matrix = load_matrix()
 
 func _set_cell_size() -> Vector2:
@@ -106,7 +113,6 @@ func _draw():
 			var to_draw = ord(matrix[y][x])
 			var pos = Vector2(x, y) * cell_size + Vector2(0, font.get_ascent())
 			font.draw_char(get_canvas_item(), pos, to_draw, -1, Color.azure)
-
 	
 func save_as_godot_scene():
 	# TODO: font needs to be saved/copied too.
