@@ -17,15 +17,17 @@ func init_custom_cursor(zoom_level: float = 1.0):
 	TODO: sadly, the complete custom cursor isn't as easy to do, as not only
 	the camera zoom level applies, but also the 
 	"""
-#	pass
 	var tex = ImageTexture.new()
 	var img = Image.new()
-	var width = Global.cell_size.x / zoom_level
-	var height = Global.cell_size.y / zoom_level
-	img.create(width, height, true, Image.FORMAT_RGB8)
-	img.fill(Color.brown)
+	var width = round(Global.cell_size.x / zoom_level)
+	var height = round(Global.cell_size.y / zoom_level)
+	img.create(width, height, true, Image.FORMAT_RGBA8)
+	var col = Color.goldenrod
+	# set the transparancy of the cursor
+	col.a = 0.6
+	img.fill(col)
 	tex.create_from_image(img)
-	Input.set_custom_mouse_cursor(tex)
+	Input.set_custom_mouse_cursor(tex, 0, Vector2(width / 2, height / 2))
 
 
 func _input(event):
