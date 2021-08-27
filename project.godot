@@ -25,7 +25,6 @@ Global="*res://Global.gd"
 [display]
 
 window/size/width=800
-window/size/height=400
 window/stretch/aspect="keep"
 
 [input]

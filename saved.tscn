@@ -1,68 +1,162 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://fonts/monogram_extended.ttf" type="DynamicFontData" id=1]
 
 [sub_resource type="DynamicFont" id=1]
+size = 32
 font_data = ExtResource( 1 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 3, 6.5 )
+extents = Vector2( 6, 13 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 3, 6.5 )
+extents = Vector2( 6, 13 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 3, 6.5 )
+extents = Vector2( 6, 13 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 3, 6.5 )
+extents = Vector2( 6, 13 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 6, 13 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 6, 13 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 6, 13 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 6, 13 )
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 6, 13 )
 
 [node name="TextMap" type="Node2D"]
 
-[node name="X_0,0" type="Label" parent="."]
+[node name="f_3,7" type="Label" parent="."]
+margin_left = 84.0
+margin_top = 78.0
+margin_right = 84.0
+margin_bottom = 78.0
 custom_fonts/font = SubResource( 1 )
-text = "X"
+text = "f"
 
-[node name="StaticBody2D_0,0" type="StaticBody2D" parent="X_0,0"]
-position = Vector2( 3, 6.5 )
+[node name="StaticBody2D_3,7" type="StaticBody2D" parent="f_3,7"]
+position = Vector2( 6, 13 )
 
-[node name="CollisionShape2D_0,0" type="CollisionShape2D" parent="X_0,0/StaticBody2D_0,0"]
+[node name="CollisionShape2D_3,7" type="CollisionShape2D" parent="f_3,7/StaticBody2D_3,7"]
 shape = SubResource( 2 )
 
-[node name="X_0,29" type="Label" parent="."]
-margin_left = 174.0
-margin_right = 174.0
+[node name="f_3,8" type="Label" parent="."]
+margin_left = 96.0
+margin_top = 78.0
+margin_right = 96.0
+margin_bottom = 78.0
 custom_fonts/font = SubResource( 1 )
-text = "X"
+text = "f"
 
-[node name="StaticBody2D_0,29" type="StaticBody2D" parent="X_0,29"]
-position = Vector2( 3, 6.5 )
+[node name="StaticBody2D_3,8" type="StaticBody2D" parent="f_3,8"]
+position = Vector2( 6, 13 )
 
-[node name="CollisionShape2D_0,29" type="CollisionShape2D" parent="X_0,29/StaticBody2D_0,29"]
+[node name="CollisionShape2D_3,8" type="CollisionShape2D" parent="f_3,8/StaticBody2D_3,8"]
 shape = SubResource( 3 )
 
-[node name="X_7,0" type="Label" parent="."]
-margin_top = 91.0
-margin_bottom = 91.0
+[node name="j_3,9" type="Label" parent="."]
+margin_left = 108.0
+margin_top = 78.0
+margin_right = 108.0
+margin_bottom = 78.0
 custom_fonts/font = SubResource( 1 )
-text = "X"
+text = "j"
 
-[node name="StaticBody2D_7,0" type="StaticBody2D" parent="X_7,0"]
-position = Vector2( 3, 6.5 )
+[node name="StaticBody2D_3,9" type="StaticBody2D" parent="j_3,9"]
+position = Vector2( 6, 13 )
 
-[node name="CollisionShape2D_7,0" type="CollisionShape2D" parent="X_7,0/StaticBody2D_7,0"]
+[node name="CollisionShape2D_3,9" type="CollisionShape2D" parent="j_3,9/StaticBody2D_3,9"]
 shape = SubResource( 4 )
 
-[node name="X_7,29" type="Label" parent="."]
-margin_left = 174.0
-margin_top = 91.0
-margin_right = 174.0
-margin_bottom = 91.0
+[node name="d_3,6" type="Label" parent="."]
+margin_left = 72.0
+margin_top = 78.0
+margin_right = 72.0
+margin_bottom = 78.0
 custom_fonts/font = SubResource( 1 )
-text = "X"
+text = "d"
 
-[node name="StaticBody2D_7,29" type="StaticBody2D" parent="X_7,29"]
-position = Vector2( 3, 6.5 )
+[node name="StaticBody2D_3,6" type="StaticBody2D" parent="d_3,6"]
+position = Vector2( 6, 13 )
 
-[node name="CollisionShape2D_7,29" type="CollisionShape2D" parent="X_7,29/StaticBody2D_7,29"]
+[node name="CollisionShape2D_3,6" type="CollisionShape2D" parent="d_3,6/StaticBody2D_3,6"]
 shape = SubResource( 5 )
+
+[node name="f_1,6" type="Label" parent="."]
+margin_left = 72.0
+margin_top = 26.0
+margin_right = 72.0
+margin_bottom = 26.0
+custom_fonts/font = SubResource( 1 )
+text = "f"
+
+[node name="StaticBody2D_1,6" type="StaticBody2D" parent="f_1,6"]
+position = Vector2( 6, 13 )
+
+[node name="CollisionShape2D_1,6" type="CollisionShape2D" parent="f_1,6/StaticBody2D_1,6"]
+shape = SubResource( 6 )
+
+[node name="d_1,8" type="Label" parent="."]
+margin_left = 96.0
+margin_top = 26.0
+margin_right = 96.0
+margin_bottom = 26.0
+custom_fonts/font = SubResource( 1 )
+text = "d"
+
+[node name="StaticBody2D_1,8" type="StaticBody2D" parent="d_1,8"]
+position = Vector2( 6, 13 )
+
+[node name="CollisionShape2D_1,8" type="CollisionShape2D" parent="d_1,8/StaticBody2D_1,8"]
+shape = SubResource( 7 )
+
+[node name="d_1,9" type="Label" parent="."]
+margin_left = 108.0
+margin_top = 26.0
+margin_right = 108.0
+margin_bottom = 26.0
+custom_fonts/font = SubResource( 1 )
+text = "d"
+
+[node name="StaticBody2D_1,9" type="StaticBody2D" parent="d_1,9"]
+position = Vector2( 6, 13 )
+
+[node name="CollisionShape2D_1,9" type="CollisionShape2D" parent="d_1,9/StaticBody2D_1,9"]
+shape = SubResource( 8 )
+
+[node name="d_2,9" type="Label" parent="."]
+margin_left = 108.0
+margin_top = 52.0
+margin_right = 108.0
+margin_bottom = 52.0
+custom_fonts/font = SubResource( 1 )
+text = "d"
+
+[node name="StaticBody2D_2,9" type="StaticBody2D" parent="d_2,9"]
+position = Vector2( 6, 13 )
+
+[node name="CollisionShape2D_2,9" type="CollisionShape2D" parent="d_2,9/StaticBody2D_2,9"]
+shape = SubResource( 9 )
+
+[node name="d_2,6" type="Label" parent="."]
+margin_left = 72.0
+margin_top = 52.0
+margin_right = 72.0
+margin_bottom = 52.0
+custom_fonts/font = SubResource( 1 )
+text = "d"
+
+[node name="StaticBody2D_2,6" type="StaticBody2D" parent="d_2,6"]
+position = Vector2( 6, 13 )
+
+[node name="CollisionShape2D_2,6" type="CollisionShape2D" parent="d_2,6/StaticBody2D_2,6"]
+shape = SubResource( 10 )
