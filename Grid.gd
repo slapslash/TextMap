@@ -3,11 +3,12 @@ extends Node2D
 onready var n_screens_around = 10
 
 func _ready():
-	print(OS.get_screen_size())
-	print(ProjectSettings.get_setting("display/window/size/width"))
-	
-	ProjectSettings.set_setting("display/window/size/width", Global.cell_size.x * 20)
-	print(ProjectSettings.get_setting("display/window/size/width"))
+#	print(OS.get_screen_size())
+#	print(ProjectSettings.get_setting("display/window/size/width"))
+#
+#	ProjectSettings.set_setting("display/window/size/width", Global.cell_size.x * 20)
+#	print(ProjectSettings.get_setting("display/window/size/width"))
+	pass
 
 func _draw():
 	var s = Global.screen_size_pixels

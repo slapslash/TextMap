@@ -1,3 +1,68 @@
-[gd_scene format=2]
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://fonts/monogram_extended.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 3, 6.5 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 3, 6.5 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 3, 6.5 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 3, 6.5 )
 
 [node name="TextMap" type="Node2D"]
+
+[node name="X_0,0" type="Label" parent="."]
+custom_fonts/font = SubResource( 1 )
+text = "X"
+
+[node name="StaticBody2D_0,0" type="StaticBody2D" parent="X_0,0"]
+position = Vector2( 3, 6.5 )
+
+[node name="CollisionShape2D_0,0" type="CollisionShape2D" parent="X_0,0/StaticBody2D_0,0"]
+shape = SubResource( 2 )
+
+[node name="X_0,29" type="Label" parent="."]
+margin_left = 174.0
+margin_right = 174.0
+custom_fonts/font = SubResource( 1 )
+text = "X"
+
+[node name="StaticBody2D_0,29" type="StaticBody2D" parent="X_0,29"]
+position = Vector2( 3, 6.5 )
+
+[node name="CollisionShape2D_0,29" type="CollisionShape2D" parent="X_0,29/StaticBody2D_0,29"]
+shape = SubResource( 3 )
+
+[node name="X_7,0" type="Label" parent="."]
+margin_top = 91.0
+margin_bottom = 91.0
+custom_fonts/font = SubResource( 1 )
+text = "X"
+
+[node name="StaticBody2D_7,0" type="StaticBody2D" parent="X_7,0"]
+position = Vector2( 3, 6.5 )
+
+[node name="CollisionShape2D_7,0" type="CollisionShape2D" parent="X_7,0/StaticBody2D_7,0"]
+shape = SubResource( 4 )
+
+[node name="X_7,29" type="Label" parent="."]
+margin_left = 174.0
+margin_top = 91.0
+margin_right = 174.0
+margin_bottom = 91.0
+custom_fonts/font = SubResource( 1 )
+text = "X"
+
+[node name="StaticBody2D_7,29" type="StaticBody2D" parent="X_7,29"]
+position = Vector2( 3, 6.5 )
+
+[node name="CollisionShape2D_7,29" type="CollisionShape2D" parent="X_7,29/StaticBody2D_7,29"]
+shape = SubResource( 5 )
