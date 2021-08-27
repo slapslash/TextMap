@@ -3,6 +3,8 @@ extends Camera2D
 var _scroll: bool = false
 var _scroll_start: Vector2
 
+signal zoom_changed(current_zoom_level)
+
 """
 Node to enable zooming, scrolling (moving with right mouse button)
 and the camera following the cursor, when reaching the screen extends.
@@ -17,6 +19,7 @@ func _ready():
 	# TODO: drag margins need to be adjusted to the size of the cursor.
 	# But only, if dragging is used sometime in the future.
 	_initial_zoom_and_positioning()
+	emit_signal("zoom_changed", zoom.x)
 
 func _initial_zoom_and_positioning():
 	"""
@@ -34,8 +37,10 @@ func _input(event):
 		if event.pressed:
 			if event.button_index == BUTTON_WHEEL_DOWN and zoom.x < 10:
 				zoom *= 1.1
+				emit_signal("zoom_changed", zoom.x)
 			elif event.button_index == BUTTON_WHEEL_UP and zoom.x > 0.1:
 				zoom *= 0.9
+				emit_signal("zoom_changed", zoom.x)
 			elif event.button_index == BUTTON_RIGHT:
 				if not _scroll:
 					_scroll_start = get_global_mouse_position()
@@ -62,7 +67,7 @@ func get_camera_viewport_rect() -> Rect2:
 	returns the actual visible rect of the camera including the zoom.
 	"""
 	var cameraPos = get_camera_screen_center()
-	var viewportRect = get_viewport_rect().size * zoom
+	var viewportRect = Global.screen_size_pixels * zoom
 	var pos_x = cameraPos.x - viewportRect.x / 2
 	var pos_y = cameraPos.y - viewportRect.y / 2
 	return Rect2(Vector2(pos_x, pos_y), viewportRect)
