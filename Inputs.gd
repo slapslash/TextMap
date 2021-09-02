@@ -32,7 +32,11 @@ func _input(event):
 			KEY_ESCAPE:
 				print("escape pressed")
 			KEY_ENTER, KEY_KP_ENTER:
-				print("enter pressed")
+				# basically same as home, but jump one row down.
+				var c = Global.get_former_cells()
+				if len(c):
+					add.x = c.min() - Global.cell.x
+					add.y = 1
 			KEY_SPACE:
 				Global.push_cells()
 				add.x = 1
