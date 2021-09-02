@@ -1,32 +1,10 @@
-extends Polygon2D
+extends Node2D
+
+onready var cursor: Polygon2D
+
 
 func _ready():
-	# set cursor behind the text
-	z_index = -1
-	
-	polygon = PoolVector2Array([Vector2(0,0),
-								Vector2(Global.cell_size.x, 0),
-								Global.cell_size,
-								Vector2(0, Global.cell_size.y)])
-
-	_update_cursor()
-
-func init_custom_cursor(zoom_level: float = 1.0):
-	"""
-	Change cursor to something more suitable than the standard arrow.
-	Needs to be called every time, the camera zoom changes.
-	"""
-	var tex = ImageTexture.new()
-	var img = Image.new()
-	var width = round(Global.cell_size.x / zoom_level)
-	var height = round(Global.cell_size.y / zoom_level)
-	img.create(width, height, true, Image.FORMAT_RGBA8)
-	var col = Color.goldenrod
-	# set the transparancy of the cursor
-	col.a = 0.6
-	img.fill(col)
-	tex.create_from_image(img)
-	Input.set_custom_mouse_cursor(tex, 0, Vector2(width / 2, height / 2))
+	_init_cursor()
 
 
 func _input(event):
@@ -89,11 +67,43 @@ func _input(event):
 					Global.set_cell_character(last_input)
 					add.x = 1
 		change_cell(add)
-		
+
+
+func init_custom_mouse_cursor(zoom_level: float = 1.0):
+	"""
+	Change cursor to something more suitable than the standard arrow.
+	Needs to be called every time, the camera zoom changes.
+	"""
+	var tex = ImageTexture.new()
+	var img = Image.new()
+	var width = round(Global.cell_size.x / zoom_level)
+	var height = round(Global.cell_size.y / zoom_level)
+	img.create(width, height, true, Image.FORMAT_RGBA8)
+	var col = Color.goldenrod
+	# set the transparancy of the cursor
+	col.a = 0.6
+	img.fill(col)
+	tex.create_from_image(img)
+	Input.set_custom_mouse_cursor(tex, 0, Vector2(width / 2, height / 2))
+
+
+func _init_cursor():
+	cursor = Polygon2D.new()
+	# set cursor behind the text
+	cursor.z_index = -1
+	cursor.polygon = PoolVector2Array([Vector2(0,0),
+								Vector2(Global.cell_size.x, 0),
+								Global.cell_size,
+								Vector2(0, Global.cell_size.y)])
+	cursor.color = Global.cursor_color
+	add_child(cursor)
+	_update_cursor()
+
 
 func _update_cursor():
-	global_position = Global.cell_size * Global.cell
-	
+	cursor.global_position = Global.cell_size * Global.cell
+
+
 func change_cell(add: Vector2):
 	Global.cell += add
 	_update_cursor()
