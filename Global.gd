@@ -1,6 +1,7 @@
 extends Node2D
 
 var font
+var font_size: int = 32
 var cell_size = Vector2(0, 0)
 var cell = Vector2(0, 0)
 var matrix: Dictionary # y,x
@@ -10,11 +11,13 @@ var screen_size_characters: Vector2 = Vector2(30, 8)
 # size of a screen in pixels. Is calculated from the cell size/ font size
 # and screen_size_characters.
 var screen_size_pixels: Vector2
+var show_grid: bool = true
+
 
 func _ready():
 	font = DynamicFont.new()
 	font.font_data = load('res://fonts/monogram_extended.ttf')
-	font.size = 32
+	font.size = font_size
 
 	cell_size = _set_cell_size()
 	prints('using cell size:', cell_size)
@@ -116,7 +119,6 @@ func _draw():
 	
 func save_as_godot_scene():
 	# TODO: font needs to be saved/copied too.
-	print('saving')
 	var scene = Node2D.new()
 	scene.name = 'TextMap'
 	for y in matrix:
