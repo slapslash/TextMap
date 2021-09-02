@@ -65,6 +65,14 @@ func _input(event):
 				Global.clear_left_cell()
 				Global.pull_cells()
 				add.x = -1
+			KEY_HOME:
+				var c = Global.get_former_cells()
+				if len(c):
+					add.x = c.min() - Global.cell.x
+			KEY_END:
+				var c = Global.get_upcoming_cells()
+				if len(c):
+					add.x = c.max() - Global.cell.x
 			268435539: # Control+S
 				print('saving')
 				Global.save_matrix()

@@ -13,12 +13,10 @@ var screen_size_characters: Vector2 = Vector2(30, 8)
 var screen_size_pixels: Vector2
 var show_grid: bool = true
 
-
 func _ready():
 	font = DynamicFont.new()
 	font.font_data = load('res://fonts/monogram_extended.ttf')
 	font.size = font_size
-
 	cell_size = _set_cell_size()
 	prints('using cell size:', cell_size)
 
@@ -71,7 +69,7 @@ func push_cells():
 	Shift subsequent characters in the current row right
 	until two emtpy cells are found.
 	"""
-	var upcoming = _upcoming_cells()
+	var upcoming = get_upcoming_cells()
 	# need to start from the back as n+1 is stored and would overwrite else.
 	upcoming.invert()
 	for u in upcoming:
@@ -85,13 +83,13 @@ func pull_cells():
 	Shift subsequent characters in the current row left
 	until two emtpy cells are found.
 	"""
-	for u in _upcoming_cells():
+	for u in get_upcoming_cells():
 		matrix[cell.y][u-1] = matrix[cell.y][u]
 		matrix[cell.y].erase(u)
 	update()
 
 
-func _upcoming_cells() -> Array:
+func get_upcoming_cells() -> Array:
 	var upcoming = []
 	if matrix.has(cell.y):
 		var pos = matrix[cell.y].keys()
@@ -102,9 +100,22 @@ func _upcoming_cells() -> Array:
 			# it can be processed nonetheless.
 			elif (not i+1 in pos) and (i != cell.x):
 				# Found a two spaced gap, can stop now.
-				break	
+				break
 	return upcoming
 
+func get_former_cells() -> Array:
+	var former = []
+	if matrix.has(cell.y):
+		var pos = matrix[cell.y].keys()
+		for i in range(cell.x, pos.min() - 1, -1):
+			if i in pos:
+				former.append(float(i))
+			# if current cursor cell is empty and the next too,
+			# it can be processed nonetheless.
+			elif (not i-1 in pos) and (i != cell.x):
+				# Found a two spaced gap, can stop now.
+				break
+	return former
 
 func _draw():
 	"""
