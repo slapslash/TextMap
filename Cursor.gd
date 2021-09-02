@@ -66,8 +66,9 @@ func _input(event):
 				Global.pull_cells()
 				add.x = -1
 			268435539: # Control+S
+				print('saving')
 				Global.save_matrix()
-				Global.save_as_godot_scene()
+#				Global.save_as_godot_scene()
 			_:
 				var ch = OS.get_scancode_string(scm)
 				var last_input = char(event.unicode)
@@ -76,6 +77,7 @@ func _input(event):
 					printt("function key pressed:", ch, scm)
 				else:
 					printt(last_input, scm, ch)
+					Global.push_cells()
 					Global.set_cell_character(last_input)
 					add.x = 1
 		change_cell(add)

@@ -13,6 +13,7 @@ script = ExtResource( 2 )
 [node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
+smoothing_speed = 1.0
 script = ExtResource( 3 )
 
 [node name="Grid" type="Node2D" parent="."]
