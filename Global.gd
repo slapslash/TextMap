@@ -12,6 +12,8 @@ var screen_size_characters: Vector2 = Vector2(30, 8)
 # and screen_size_characters.
 var screen_size_pixels: Vector2
 var show_grid: bool = true
+var cursor_color: Color = Color.dimgray
+
 
 func _ready():
 	font = DynamicFont.new()
