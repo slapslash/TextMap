@@ -13,9 +13,8 @@ func _ready():
 
 func init_custom_cursor(zoom_level: float = 1.0):
 	"""
-	change cursor to something more suitable than the standard arrow.
-	TODO: sadly, the complete custom cursor isn't as easy to do, as not only
-	the camera zoom level applies, but also the 
+	Change cursor to something more suitable than the standard arrow.
+	Needs to be called every time, the camera zoom changes.
 	"""
 	var tex = ImageTexture.new()
 	var img = Image.new()
@@ -32,7 +31,8 @@ func init_custom_cursor(zoom_level: float = 1.0):
 
 func _input(event):
 	if event is InputEventMouseButton:
-		if event.pressed:
+		# change cell if left mouse button is released.
+		if not event.pressed:
 			if event.button_index == BUTTON_LEFT:
 				var mpos = get_global_mouse_position()
 				Global.cell.x = round((mpos.x - Global.cell_size.x / 2) / Global.cell_size.x)
