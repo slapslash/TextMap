@@ -2,6 +2,7 @@ extends Node2D
 
 onready var cursor: Polygon2D
 
+var _sel: Selection
 
 func _ready():
 	_init_cursor()
@@ -12,9 +13,7 @@ func _input(event):
 		# change cell if left mouse button is released.
 		if not event.pressed:
 			if event.button_index == BUTTON_LEFT:
-				var mpos = get_global_mouse_position()
-				Global.cell.x = round((mpos.x - Global.cell_size.x / 2) / Global.cell_size.x)
-				Global.cell.y = round((mpos.y - Global.cell_size.y / 2) / Global.cell_size.y)
+				Global.cell = get_cell_from_mouse_pos()
 				_update_cursor()
 				
 	elif event is InputEventKey and event.pressed:
@@ -112,3 +111,15 @@ func change_cell(add: Vector2):
 	Global.cell += add
 	_update_cursor()
 
+
+func get_cell_from_mouse_pos() -> Vector2:
+	"""
+	Get the current cell from the global mouse position.
+	The approximation of which is the current cell
+	is based on the custom cursor and its extends.
+	"""
+	var mpos = get_global_mouse_position()
+	var x = round((mpos.x - Global.cell_size.x / 2) / Global.cell_size.x)
+	var y = round((mpos.y - Global.cell_size.y / 2) / Global.cell_size.y)
+	return	Vector2(x, y)
+	
