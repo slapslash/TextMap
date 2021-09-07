@@ -119,6 +119,17 @@ func get_former_cells() -> Array:
 				break
 	return former
 
+func get_cell_from_mouse_pos() -> Vector2:
+	"""
+	Get the current cell from the global mouse position.
+	The approximation of which is the current cell
+	is based on the custom cursor and its extends.
+	"""
+	var mpos = get_global_mouse_position()
+	var x = round((mpos.x - Global.cell_size.x / 2) / Global.cell_size.x)
+	var y = round((mpos.y - Global.cell_size.y / 2) / Global.cell_size.y)
+	return	Vector2(x, y)
+
 func _draw():
 	"""
 	In fact, only a changed cell needs to be drawn, but for now the
@@ -194,3 +205,4 @@ func load_matrix() -> Dictionary:
 		for x in mat[y]:
 			ret[float(y)][float(x)] = str(mat[y][x])
 	return ret
+
