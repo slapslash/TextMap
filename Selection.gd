@@ -3,6 +3,7 @@ extends	Node2D
 var _start = null
 var _end = null
 var _drag_start = null
+var _drag_offset: Vector2 = Vector2.ZERO
 var _select_from_mouse: bool = false
 
 var selected_cells: PoolVector2Array
@@ -22,6 +23,7 @@ func _input(event):
 					_select_from_mouse = true
 				else:
 					_drag_start = mpos
+					Global.start_dragging()
 
 		elif not event.pressed:
 			if event.button_index == BUTTON_LEFT:
@@ -36,6 +38,7 @@ func _input(event):
 					_start = null
 					_end = null
 					_drag_start = null
+					_drag_offset = Vector2.ZERO
 				_set_selected_cells()
 
 				
@@ -46,9 +49,10 @@ func _input(event):
 			if mpos != _end or _end == null:
 				_end = mpos
 		elif _drag_start != null:
-			var mpos = Global.get_cell_from_mouse_pos()
-			if mpos != _drag_start:
-				prints("dragging", mpos - _drag_start)
+			var offset = Global.get_cell_from_mouse_pos() - _drag_start
+			if offset != _drag_offset:
+				_drag_offset = offset
+				Global.drag_cells(selected_cells, _drag_offset)
 
 func _set_selected_cells():
 	selected_cells = PoolVector2Array()

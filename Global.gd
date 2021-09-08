@@ -14,6 +14,10 @@ var screen_size_pixels: Vector2
 var show_grid: bool = true
 var cursor_color: Color = Color.dimgray
 
+var _dragging: bool = false
+var _drag_offset: Vector2 = Vector2.ZERO
+var _matrix_backup: Dictionary
+
 
 func _ready():
 	font = DynamicFont.new()
@@ -24,6 +28,7 @@ func _ready():
 
 	screen_size_pixels = screen_size_characters * cell_size
 	matrix = load_matrix()
+
 
 func _set_cell_size() -> Vector2:
 	"""
@@ -49,12 +54,14 @@ func set_cell_character(character: String):
 	update()
 
 
-func clear_cell():
-	if not matrix.has(cell.y): return
-	if cell.x in matrix[cell.y]:
-		matrix[cell.y].erase(cell.x)
-	if matrix[cell.y].empty():
-		var _e = matrix.erase(cell.y)
+func clear_cell(c = null):
+	if c == null:
+		c = cell
+	if not matrix.has(c.y): return
+	if c.x in matrix[c.y]:
+		matrix[c.y].erase(c.x)
+	if matrix[c.y].empty():
+		var _e = matrix.erase(c.y)
 	update()
 
 
@@ -79,7 +86,7 @@ func push_cells():
 		matrix[cell.y].erase(u)
 	update()
 
-	
+
 func pull_cells():
 	"""
 	Shift subsequent characters in the current row left
@@ -88,6 +95,33 @@ func pull_cells():
 	for u in get_upcoming_cells():
 		matrix[cell.y][u-1] = matrix[cell.y][u]
 		matrix[cell.y].erase(u)
+	update()
+
+func start_dragging():
+	_dragging = true
+	_matrix_backup = matrix.duplicate()
+
+
+func drag_cells(cells: PoolVector2Array, offset: Vector2):
+	"""
+	Drag the given cells by the given offset.
+	Also empty cells must be given.
+	Call this function every time, offset changes.
+	"""
+	matrix = _matrix_backup.duplicate(true)
+	for c in cells:
+		# clear all origin and target cells.
+		clear_cell(c)
+		clear_cell(c + offset)
+	for c in cells:
+		var move_to = c + offset
+		# is there a character to move?
+		if c.y in _matrix_backup and c.x in _matrix_backup[c.y]:
+			# do we need to create the row first?
+			if move_to.y in matrix:
+				matrix[move_to.y][move_to.x] = _matrix_backup[c.y][c.x]
+			else:
+				matrix[move_to.y] = {move_to.x: _matrix_backup[c.y][c.x]}
 	update()
 
 
@@ -105,6 +139,7 @@ func get_upcoming_cells() -> Array:
 				break
 	return upcoming
 
+
 func get_former_cells() -> Array:
 	var former = []
 	if matrix.has(cell.y):
@@ -119,6 +154,7 @@ func get_former_cells() -> Array:
 				break
 	return former
 
+
 func get_cell_from_mouse_pos() -> Vector2:
 	"""
 	Get the current cell from the global mouse position.
@@ -130,6 +166,7 @@ func get_cell_from_mouse_pos() -> Vector2:
 	var y = round((mpos.y - Global.cell_size.y / 2) / Global.cell_size.y)
 	return	Vector2(x, y)
 
+
 func _draw():
 	"""
 	In fact, only a changed cell needs to be drawn, but for now the
@@ -140,7 +177,8 @@ func _draw():
 			var to_draw = ord(matrix[y][x])
 			var pos = Vector2(x, y) * cell_size + Vector2(0, font.get_ascent())
 			font.draw_char(get_canvas_item(), pos, to_draw, -1, Color.azure)
-	
+
+
 func save_as_godot_scene():
 	# TODO: font needs to be saved/copied too.
 	var scene = Node2D.new()
@@ -178,11 +216,13 @@ func save_as_godot_scene():
 	packed_scene.pack(scene)
 	var _e = ResourceSaver.save("res://saved.tscn", packed_scene)
 
+
 func save_matrix():
 	var savefile = File.new()
 	savefile.open("res://saved_matrix.txt", File.WRITE)
 	savefile.store_string(to_json(matrix))
 	savefile.close()
+
 
 func load_matrix() -> Dictionary:
 	var savefile = File.new()
