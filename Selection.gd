@@ -62,7 +62,7 @@ func _set_selected_cells():
 			selected_cells.push_back(Vector2(x, y))
 
 
-func get_rect(cell_size: Vector2) -> Rect2:
+func _get_rect(cell_size: Vector2) -> Rect2:
 	"""
 	returns Rect2 calculated from the cells of selection projected to
 	the given cell_size. Rect2 will be in pixels.
@@ -76,7 +76,7 @@ func get_rect(cell_size: Vector2) -> Rect2:
 
 
 func _draw():
-	var rec = get_rect(Global.cell_size)
+	var rec = _get_rect(Global.cell_size)
 	var col = Color.goldenrod
 	col.a = 0.6
 	draw_rect(rec, col)
