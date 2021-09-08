@@ -15,7 +15,7 @@ func _input(event):
 				var mpos = Global.get_cell_from_mouse_pos()
 				Global.cell = mpos
 				_update_cursor()
-				selection.on_left_mouse_button_pressed()
+				selection.on_left_mouse_button_pressed(mpos)
 		elif not event.pressed:
 			if event.button_index == BUTTON_LEFT:
 				selection.on_left_mouse_button_released()

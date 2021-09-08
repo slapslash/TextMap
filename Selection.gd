@@ -12,15 +12,14 @@ func _process(_delta):
 	update()
 
 
-func on_left_mouse_button_pressed():
-	var mpos = Global.get_cell_from_mouse_pos()
-	if not mpos in selected_cells:
+func on_left_mouse_button_pressed(at_cell: Vector2):
+	if not at_cell in selected_cells:
 		# start a new selection
-		_start = mpos
+		_start = at_cell
 		_end = null
 		_select_from_mouse = true
 	else:
-		_drag_start = mpos
+		_drag_start = at_cell
 		Global.start_dragging()
 
 
