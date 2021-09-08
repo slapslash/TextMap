@@ -1,13 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Grid.gd" type="Script" id=1]
 [ext_resource path="res://Inputs.gd" type="Script" id=2]
 [ext_resource path="res://Camera.gd" type="Script" id=3]
+[ext_resource path="res://Selection.gd" type="Script" id=4]
 
 [node name="TextMap" type="Node2D"]
 
 [node name="Inputs" type="Node2D" parent="."]
 script = ExtResource( 2 )
+
+[node name="Selection" type="Node2D" parent="Inputs"]
+script = ExtResource( 4 )
 
 [node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0
