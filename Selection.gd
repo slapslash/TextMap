@@ -11,48 +11,47 @@ var selected_cells: PoolVector2Array
 func _process(_delta):
 	update()
 
-func _input(event):
-	if event is InputEventMouseButton:
-		if event.pressed:
-			if event.button_index == BUTTON_LEFT:
-				var mpos = Global.get_cell_from_mouse_pos()
-				if not mpos in selected_cells:
-					# start a new selection
-					_start = mpos
-					_end = null
-					_select_from_mouse = true
-				else:
-					_drag_start = mpos
-					Global.start_dragging()
 
-		elif not event.pressed:
-			if event.button_index == BUTTON_LEFT:
-				if _select_from_mouse:
-					# after the releasing LMB, the current selection will
-					# not change anymore, if mouse is moved.
-					_select_from_mouse = false
-				else:
-					# if select from mouse is already false, LMB has been
-					# released again and if or if not selection had been
-					# interacted with: reset it.
-					_start = null
-					_end = null
-					_drag_start = null
-					_drag_offset = Vector2.ZERO
-				_set_selected_cells()
+func on_left_mouse_button_pressed():
+	var mpos = Global.get_cell_from_mouse_pos()
+	if not mpos in selected_cells:
+		# start a new selection
+		_start = mpos
+		_end = null
+		_select_from_mouse = true
+	else:
+		_drag_start = mpos
+		Global.start_dragging()
 
-				
-	elif event is InputEventMouseMotion:
-		if _select_from_mouse:
-			# change selection if mouse is moved and LMB still held.
-			var mpos = Global.get_cell_from_mouse_pos()
-			if mpos != _end or _end == null:
-				_end = mpos
-		elif _drag_start != null:
-			var offset = Global.get_cell_from_mouse_pos() - _drag_start
-			if offset != _drag_offset:
-				_drag_offset = offset
-				Global.drag_cells(selected_cells, _drag_offset)
+
+func on_left_mouse_button_released():
+	if _select_from_mouse:
+		# after the releasing LMB, the current selection will
+		# not change anymore, if mouse is moved.
+		_select_from_mouse = false
+	else:
+		# if select from mouse is already false, LMB has been
+		# released again and if or if not selection had been
+		# interacted with: reset it.
+		_start = null
+		_end = null
+		_drag_start = null
+		_drag_offset = Vector2.ZERO
+	_set_selected_cells()
+
+
+func on_mouse_motion():
+	if _select_from_mouse:
+		# change selection if mouse is moved and LMB still held.
+		var mpos = Global.get_cell_from_mouse_pos()
+		if mpos != _end or _end == null:
+			_end = mpos
+	elif _drag_start != null:
+		var offset = Global.get_cell_from_mouse_pos() - _drag_start
+		if offset != _drag_offset:
+			_drag_offset = offset
+			Global.drag_cells(selected_cells, _drag_offset)
+
 
 func _set_selected_cells():
 	selected_cells = PoolVector2Array()

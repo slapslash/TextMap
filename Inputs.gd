@@ -1,7 +1,7 @@
 extends Node2D
 
 onready var cursor: Polygon2D
-
+onready var selection = $Selection
 
 func _ready():
 	_init_cursor()
@@ -15,6 +15,12 @@ func _input(event):
 				var mpos = Global.get_cell_from_mouse_pos()
 				Global.cell = mpos
 				_update_cursor()
+				selection.on_left_mouse_button_pressed()
+		elif not event.pressed:
+			if event.button_index == BUTTON_LEFT:
+				selection.on_left_mouse_button_released()
+	elif event is InputEventMouseMotion:
+		selection.on_mouse_motion()
 
 	elif event is InputEventKey and event.pressed:
 		var add = Vector2(0, 0)
@@ -28,6 +34,18 @@ func _input(event):
 				add.y = -1
 			KEY_DOWN:
 				add.y = 1
+			50331665:
+				# Shift+Right
+				pass
+			50331663:
+				# Shift+Left
+				pass
+			50331664:
+				# Shift+Up
+				pass
+			50331666:
+				# Shift+Down
+				pass
 			KEY_ESCAPE:
 				print("escape pressed")
 			KEY_ENTER, KEY_KP_ENTER:
@@ -57,7 +75,7 @@ func _input(event):
 			268435539: # Control+S
 				print('saving')
 				Global.save_matrix()
-#				Global.save_as_godot_scene()
+				# Global.save_as_godot_scene()
 			_:
 				var ch = OS.get_scancode_string(scm)
 				var last_input = char(event.unicode)
