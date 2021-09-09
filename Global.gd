@@ -55,8 +55,7 @@ func set_cell_character(character: String):
 
 
 func clear_cell(c = null):
-	if c == null:
-		c = cell
+	if c == null: c = cell
 	if not matrix.has(c.y): return
 	if c.x in matrix[c.y]:
 		matrix[c.y].erase(c.x)
@@ -65,37 +64,41 @@ func clear_cell(c = null):
 	update()
 
 
-func clear_left_cell():
-	if not matrix.has(cell.y): return
-	matrix[cell.y].erase(cell.x-1)
-	if matrix[cell.y].empty():
-		var _e = matrix.erase(cell.y)
+func clear_left_cell(c = null):
+	if c == null: c = cell
+	if not matrix.has(c.y): return
+	matrix[c.y].erase(c.x-1)
+	if matrix[c.y].empty():
+		var _e = matrix.erase(c.y)
 	update()
 
 
-func push_cells():
+func push_cells(c = null):
 	"""
 	Shift subsequent characters in the current row right
 	until two emtpy cells are found.
 	"""
-	var upcoming = get_upcoming_cells()
+	if c == null: c = cell
+	var upcoming = get_upcoming_cells(c)
 	# need to start from the back as n+1 is stored and would overwrite else.
 	upcoming.invert()
 	for u in upcoming:
-		matrix[cell.y][u+1] = matrix[cell.y][u]
-		matrix[cell.y].erase(u)
+		matrix[c.y][u+1] = matrix[c.y][u]
+		matrix[c.y].erase(u)
 	update()
 
 
-func pull_cells():
+func pull_cells(c = null):
 	"""
 	Shift subsequent characters in the current row left
 	until two emtpy cells are found.
 	"""
-	for u in get_upcoming_cells():
-		matrix[cell.y][u-1] = matrix[cell.y][u]
-		matrix[cell.y].erase(u)
+	if c == null: c = cell
+	for u in get_upcoming_cells(c):
+		matrix[c.y][u-1] = matrix[c.y][u]
+		matrix[c.y].erase(u)
 	update()
+
 
 func start_dragging():
 	_dragging = true
@@ -125,31 +128,33 @@ func drag_cells(cells: PoolVector2Array, offset: Vector2):
 	update()
 
 
-func get_upcoming_cells() -> Array:
+func get_upcoming_cells(c = null) -> Array:
+	if c == null: c = cell
 	var upcoming = []
-	if matrix.has(cell.y):
-		var pos = matrix[cell.y].keys()
-		for i in range(cell.x, pos.max() + 1):
+	if matrix.has(c.y):
+		var pos = matrix[c.y].keys()
+		for i in range(c.x, pos.max() + 1):
 			if i in pos:
 				upcoming.append(float(i))
 			# if current cursor cell is empty and the next too,
 			# it can be processed nonetheless.
-			elif (not i+1 in pos) and (i != cell.x):
+			elif (not i+1 in pos) and (i != c.x):
 				# Found a two spaced gap, can stop now.
 				break
 	return upcoming
 
 
-func get_former_cells() -> Array:
+func get_former_cells(c = null) -> Array:
+	if c == null: c = cell
 	var former = []
-	if matrix.has(cell.y):
-		var pos = matrix[cell.y].keys()
-		for i in range(cell.x, pos.min() - 1, -1):
+	if matrix.has(c.y):
+		var pos = matrix[c.y].keys()
+		for i in range(c.x, pos.min() - 1, -1):
 			if i in pos:
 				former.append(float(i))
 			# if current cursor cell is empty and the next too,
 			# it can be processed nonetheless.
-			elif (not i-1 in pos) and (i != cell.x):
+			elif (not i-1 in pos) and (i != c.x):
 				# Found a two spaced gap, can stop now.
 				break
 	return former

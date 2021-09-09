@@ -65,7 +65,6 @@ func _input(event):
 				selection.on_selection_by_key(add.x, 0)
 			
 			KEY_ESCAPE:
-				print("escape pressed")
 				selection.clear()
 			
 			KEY_ENTER, KEY_KP_ENTER:
@@ -98,8 +97,7 @@ func _input(event):
 				add.x = Global.get_end()
 				selection.clear()
 			
-			268435539:
-				# Control+S
+			268435539: # Control+S
 				print('saving')
 				Global.save_matrix()
 				# Global.save_as_godot_scene()
