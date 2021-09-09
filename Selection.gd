@@ -6,11 +6,15 @@ var _drag_start = null
 var _drag_offset: Vector2 = Vector2.ZERO
 
 var _change_selection_by_mouse: bool = false
-
 var _selected_cells: PoolVector2Array
+
 
 func _process(_delta):
 	update()
+
+
+func are_cells_selected() -> bool:
+	return not _selected_cells.empty()
 
 
 func get_selected_cells() -> PoolVector2Array:
@@ -22,6 +26,7 @@ func clear():
 	_end = null
 	_drag_start = null
 	_drag_offset = Vector2.ZERO
+	_set_selected_cells()
 
 
 func on_selection_by_key(add_x: int, add_y: int):
@@ -30,13 +35,14 @@ func on_selection_by_key(add_x: int, add_y: int):
 	Typically Shift+Arrow keys.
 	Relies on current cell has not yet been changed due to arrow movement.
 	"""
-	if _start == null and _end == null:
+	if _start == null:
 		# start new selection
 		_start = Global.cell
+	if _end == null:
 		_end = Global.cell + Vector2(add_x, add_y)
-	else :
+	else:
 		_end += Vector2(add_x, add_y)
-	_set__selected_cells()
+	_set_selected_cells()
 
 
 func on_left_mouse_button_pressed(at_cell: Vector2):
@@ -60,7 +66,7 @@ func on_left_mouse_button_released():
 		# released again and if or if not selection had been
 		# interacted with: reset it.
 		clear()
-	_set__selected_cells()
+	_set_selected_cells()
 
 
 func on_mouse_motion():
@@ -76,7 +82,7 @@ func on_mouse_motion():
 			Global.drag_cells(_selected_cells, _drag_offset)
 
 
-func _set__selected_cells():
+func _set_selected_cells():
 	_selected_cells = PoolVector2Array()
 	if _start == null or _end == null:
 		return
