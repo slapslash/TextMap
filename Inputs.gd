@@ -68,12 +68,16 @@ func _input(event):
 				selection.clear()
 			
 			KEY_ENTER, KEY_KP_ENTER:
+				if selection.are_cells_selected():
+					selection.clear_selected_cells()
 				# basically same as home, but jump one row down.
 				add.x = Global.get_home()
 				add.y = 1
 				selection.clear()
 			
 			KEY_SPACE:
+				if selection.are_cells_selected():
+					selection.clear_selected_cells()
 				Global.push_cells()
 				add.x = 1
 				selection.clear()
@@ -87,9 +91,12 @@ func _input(event):
 				selection.clear()
 			
 			KEY_BACKSPACE:
-				Global.clear_left_cell()
-				Global.pull_cells()
-				add.x = -1
+				if selection.are_cells_selected():
+					selection.clear_selected_cells()
+				else:
+					Global.clear_left_cell()
+					Global.pull_cells()
+					add.x = -1
 				selection.clear()
 			
 			KEY_HOME:
@@ -113,6 +120,8 @@ func _input(event):
 					# most likely some unhandled function key.
 					printt("function key pressed:", ch, scm)
 				else:
+					if selection.are_cells_selected():
+						selection.clear_selected_cells()
 					printt(last_input, scm, ch)
 					Global.push_cells()
 					Global.set_cell_character(last_input)
