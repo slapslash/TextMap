@@ -9,15 +9,13 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseButton:
-		# change cell if left mouse button is released.
-		if event.pressed:
-			if event.button_index == BUTTON_LEFT:
-				var mpos = Global.get_cell_from_mouse_pos()
-				Global.cell = mpos
-				_update_cursor()
+		if event.button_index == BUTTON_LEFT:
+			var mpos = Global.get_cell_from_mouse_pos()
+			Global.cell = mpos
+			_update_cursor()
+			if event.pressed:
 				selection.on_left_mouse_button_pressed(mpos)
-		elif not event.pressed:
-			if event.button_index == BUTTON_LEFT:
+			elif not event.pressed:
 				selection.on_left_mouse_button_released()
 	elif event is InputEventMouseMotion:
 		selection.on_mouse_motion()
@@ -28,55 +26,101 @@ func _input(event):
 		match scm:
 			KEY_RIGHT:
 				add.x = 1
+				selection.clear()
+			
 			KEY_LEFT:
 				add.x = -1
+				selection.clear()
+			
 			KEY_UP:
 				add.y = -1
+				selection.clear()
+			
 			KEY_DOWN:
 				add.y = 1
+				selection.clear()
+			
 			50331665:
 				# Shift+Right
-				pass
+				add.x = 1
+				selection.on_selection_by_key(1, 0)
+			
 			50331663:
 				# Shift+Left
-				pass
+				add.x = -1
+				selection.on_selection_by_key(-1, 0)
+			
 			50331664:
 				# Shift+Up
-				pass
+				add.y = -1
+				selection.on_selection_by_key(0, -1)
+			
 			50331666:
 				# Shift+Down
-				pass
+				add.y = 1
+				selection.on_selection_by_key(0, 1)
+			
+			50331662:
+				# Shift+End
+				var c = Global.get_upcoming_cells()
+				if len(c):
+					add.x = c.max() - Global.cell.x
+					selection.on_selection_by_key(add.x, 0)
+			
+			50331661:
+				# Shift+Home
+				var c = Global.get_former_cells()
+				if len(c):
+					add.x = c.min() - Global.cell.x
+					selection.on_selection_by_key(add.x, 0)
+			
 			KEY_ESCAPE:
 				print("escape pressed")
+				selection.clear()
+			
 			KEY_ENTER, KEY_KP_ENTER:
 				# basically same as home, but jump one row down.
 				var c = Global.get_former_cells()
 				if len(c):
 					add.x = c.min() - Global.cell.x
 					add.y = 1
+				selection.clear()
+			
 			KEY_SPACE:
 				Global.push_cells()
 				add.x = 1
+				selection.clear()
+			
 			KEY_DELETE:
 				Global.clear_cell()
 				Global.pull_cells()
+				selection.clear()
+			
 			KEY_BACKSPACE:
 				Global.clear_left_cell()
 				Global.pull_cells()
 				add.x = -1
+				selection.clear()
+			
 			KEY_HOME:
 				var c = Global.get_former_cells()
 				if len(c):
 					add.x = c.min() - Global.cell.x
+				selection.clear()
+			
 			KEY_END:
 				var c = Global.get_upcoming_cells()
 				if len(c):
 					add.x = c.max() - Global.cell.x
+				selection.clear()
+			
 			268435539: # Control+S
 				print('saving')
 				Global.save_matrix()
 				# Global.save_as_godot_scene()
+			
 			_:
+				# Every other key
 				var ch = OS.get_scancode_string(scm)
 				var last_input = char(event.unicode)
 				if last_input == '':
@@ -87,6 +131,8 @@ func _input(event):
 					Global.push_cells()
 					Global.set_cell_character(last_input)
 					add.x = 1
+					selection.clear()
+
 		change_cell(add)
 
 

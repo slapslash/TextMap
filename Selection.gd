@@ -4,43 +4,67 @@ var _start = null
 var _end = null
 var _drag_start = null
 var _drag_offset: Vector2 = Vector2.ZERO
-var _select_from_mouse: bool = false
 
-var selected_cells: PoolVector2Array
+var _change_selection_by_mouse: bool = false
+
+var _selected_cells: PoolVector2Array
 
 func _process(_delta):
 	update()
 
 
+func get_selected_cells() -> PoolVector2Array:
+	return _selected_cells
+
+
+func clear():
+	_start = null
+	_end = null
+	_drag_start = null
+	_drag_offset = Vector2.ZERO
+
+
+func on_selection_by_key(add_x: int, add_y: int):
+	"""
+	Call this, if selection should be altered/started from keyboard input.
+	Typically Shift+Arrow keys.
+	Relies on current cell has not yet been changed due to arrow movement.
+	"""
+	if _start == null and _end == null:
+		# start new selection
+		_start = Global.cell
+		_end = Global.cell + Vector2(add_x, add_y)
+	else :
+		_end += Vector2(add_x, add_y)
+	_set__selected_cells()
+
+
 func on_left_mouse_button_pressed(at_cell: Vector2):
-	if not at_cell in selected_cells:
+	if not at_cell in _selected_cells:
 		# start a new selection
 		_start = at_cell
 		_end = null
-		_select_from_mouse = true
+		_change_selection_by_mouse = true
 	else:
 		_drag_start = at_cell
 		Global.start_dragging()
 
 
 func on_left_mouse_button_released():
-	if _select_from_mouse:
+	if _change_selection_by_mouse:
 		# after the releasing LMB, the current selection will
 		# not change anymore, if mouse is moved.
-		_select_from_mouse = false
+		_change_selection_by_mouse = false
 	else:
 		# if select from mouse is already false, LMB has been
 		# released again and if or if not selection had been
 		# interacted with: reset it.
-		_start = null
-		_end = null
-		_drag_start = null
-		_drag_offset = Vector2.ZERO
-	_set_selected_cells()
+		clear()
+	_set__selected_cells()
 
 
 func on_mouse_motion():
-	if _select_from_mouse:
+	if _change_selection_by_mouse:
 		# change selection if mouse is moved and LMB still held.
 		var mpos = Global.get_cell_from_mouse_pos()
 		if mpos != _end or _end == null:
@@ -49,16 +73,16 @@ func on_mouse_motion():
 		var offset = Global.get_cell_from_mouse_pos() - _drag_start
 		if offset != _drag_offset:
 			_drag_offset = offset
-			Global.drag_cells(selected_cells, _drag_offset)
+			Global.drag_cells(_selected_cells, _drag_offset)
 
 
-func _set_selected_cells():
-	selected_cells = PoolVector2Array()
+func _set__selected_cells():
+	_selected_cells = PoolVector2Array()
 	if _start == null or _end == null:
 		return
 	for x in range(min(_start.x, _end.x), max(_start.x, _end.x) + 1):
 		for y in range(min(_start.y, _end.y), max(_start.y, _end.y) + 1):
-			selected_cells.push_back(Vector2(x, y))
+			_selected_cells.push_back(Vector2(x, y))
 
 
 func _get_rect(cell_size: Vector2) -> Rect2:
