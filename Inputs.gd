@@ -20,6 +20,14 @@ func _input(event):
 	elif event is InputEventMouseMotion:
 		selection.on_mouse_motion()
 
+	elif event is InputEventKey and not event.pressed:
+		var scm = event.get_scancode_with_modifiers()
+		match scm:
+			16777238: # Control
+				# This special case is needed to clear selection after
+				# dragging by keys.
+				selection.clear()
+
 	elif event is InputEventKey and event.pressed:
 		var add = Vector2(0, 0)
 		var scm = event.get_scancode_with_modifiers()
@@ -55,18 +63,30 @@ func _input(event):
 			50331666: # Shift+Down
 				add.y = 1
 				selection.on_selection_by_key(0, 1)
-			
+
 			50331662: # Shift+End
 				add.x = Global.get_end()
 				selection.on_selection_by_key(add.x, 0)
-			
+
 			50331661: # Shift+Home
 				add.x = Global.get_home()
 				selection.on_selection_by_key(add.x, 0)
-			
+
+			285212689: # Control+Right
+				selection.on_drag_by_key(1, 0)
+
+			285212687: # Control+Left
+				selection.on_drag_by_key(-1, 0)
+
+			285212688: # Control+Up
+				selection.on_drag_by_key(0, -1)
+
+			285212690: # Control+Down
+				selection.on_drag_by_key(0, 1)
+
 			KEY_ESCAPE:
 				selection.clear()
-			
+
 			KEY_ENTER, KEY_KP_ENTER:
 				if selection.are_cells_selected():
 					selection.clear_selected_cells()

@@ -14,7 +14,6 @@ var screen_size_pixels: Vector2
 var show_grid: bool = true
 var cursor_color: Color = Color.dimgray
 
-var _dragging: bool = false
 var _drag_offset: Vector2 = Vector2.ZERO
 var _matrix_backup: Dictionary
 
@@ -101,7 +100,6 @@ func pull_cells(c = null):
 
 
 func start_dragging():
-	_dragging = true
 	_matrix_backup = matrix.duplicate()
 
 

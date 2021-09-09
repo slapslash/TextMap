@@ -2,8 +2,10 @@ extends	Node2D
 
 var _start = null
 var _end = null
-var _drag_start = null
-var _drag_offset: Vector2 = Vector2.ZERO
+var _drag_keys_start: bool = false
+var _drag_keys_offset: Vector2 = Vector2.ZERO
+var _drag_mouse_start = null
+var _drag_mouse_offset: Vector2 = Vector2.ZERO
 
 var _change_selection_by_mouse: bool = false
 var _selected_cells: PoolVector2Array
@@ -27,8 +29,10 @@ func clear():
 	"""
 	_start = null
 	_end = null
-	_drag_start = null
-	_drag_offset = Vector2.ZERO
+	_drag_mouse_start = null
+	_drag_mouse_offset = Vector2.ZERO
+	_drag_keys_start = false
+	_drag_keys_offset = Vector2.ZERO
 	_set_selected_cells()
 
 
@@ -63,14 +67,24 @@ func on_selection_by_key(add_x: int, add_y: int):
 	_set_selected_cells()
 
 
+func on_drag_by_key(add_x: int, add_y: int):
+	if not _drag_keys_start:
+		Global.start_dragging()
+		_drag_keys_start = true
+	_drag_keys_offset += Vector2(add_x, add_y)
+	Global.drag_cells(_selected_cells, _drag_keys_offset)
+
+
 func on_left_mouse_button_pressed(at_cell: Vector2):
 	if not at_cell in _selected_cells:
 		# start a new selection
+		_drag_keys_start = false
+		_drag_keys_offset = Vector2.ZERO
 		_start = at_cell
 		_end = null
 		_change_selection_by_mouse = true
 	else:
-		_drag_start = at_cell
+		_drag_mouse_start = at_cell
 		Global.start_dragging()
 
 
@@ -93,11 +107,11 @@ func on_mouse_motion():
 		var mpos = Global.get_cell_from_mouse_pos()
 		if mpos != _end or _end == null:
 			_end = mpos
-	elif _drag_start != null:
-		var offset = Global.get_cell_from_mouse_pos() - _drag_start
-		if offset != _drag_offset:
-			_drag_offset = offset
-			Global.drag_cells(_selected_cells, _drag_offset)
+	elif _drag_mouse_start != null:
+		var offset = Global.get_cell_from_mouse_pos() - _drag_mouse_start
+		if offset != _drag_mouse_offset:
+			_drag_mouse_offset = offset
+			Global.drag_cells(_selected_cells, _drag_mouse_offset)
 
 
 func _set_selected_cells():
