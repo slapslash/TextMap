@@ -101,6 +101,13 @@ func on_mouse_motion():
 
 
 func _set_selected_cells():
+	"""
+	Cells between _start and _end coordinates (cells) will be added to the
+	selection array.
+	The most top-left cell will be the first and the most bottom-right will
+	be the last cell in the array. This should not change, as other
+	functions rely on this.
+	"""
 	_selected_cells = PoolVector2Array()
 	if _start == null or _end == null:
 		return
