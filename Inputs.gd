@@ -79,8 +79,11 @@ func _input(event):
 				selection.clear()
 			
 			KEY_DELETE:
-				Global.clear_cell()
-				Global.pull_cells()
+				if selection.are_cells_selected():
+					selection.clear_selected_cells()
+				else:
+					Global.clear_cell()
+					Global.pull_cells()
 				selection.clear()
 			
 			KEY_BACKSPACE:

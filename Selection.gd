@@ -22,11 +22,29 @@ func get_selected_cells() -> PoolVector2Array:
 
 
 func clear():
+	"""
+	Abort/clear selection without affecting the cells.
+	"""
 	_start = null
 	_end = null
 	_drag_start = null
 	_drag_offset = Vector2.ZERO
 	_set_selected_cells()
+
+
+func clear_selected_cells():
+	"""
+	Clear the cells in selection and pull subsequent cells.
+	Cursor will be set to the most top left cell in selection.
+	"""
+	var sel = _selected_cells
+	var new_cursor_pos = sel[0]
+	# start from behind, to get cell pulling right.
+	sel.invert()
+	for c in sel:
+		Global.clear_cell(c)
+		Global.pull_cells(c)
+	Global.cell = new_cursor_pos
 
 
 func on_selection_by_key(add_x: int, add_y: int):
