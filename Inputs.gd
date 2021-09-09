@@ -40,39 +40,29 @@ func _input(event):
 				add.y = 1
 				selection.clear()
 			
-			50331665:
-				# Shift+Right
+			50331665: # Shift+Right
 				add.x = 1
 				selection.on_selection_by_key(1, 0)
 			
-			50331663:
-				# Shift+Left
+			50331663: # Shift+Left
 				add.x = -1
 				selection.on_selection_by_key(-1, 0)
 			
-			50331664:
-				# Shift+Up
+			50331664: # Shift+Up
 				add.y = -1
 				selection.on_selection_by_key(0, -1)
 			
-			50331666:
-				# Shift+Down
+			50331666: # Shift+Down
 				add.y = 1
 				selection.on_selection_by_key(0, 1)
 			
-			50331662:
-				# Shift+End
-				var c = Global.get_upcoming_cells()
-				if len(c):
-					add.x = c.max() - Global.cell.x
-					selection.on_selection_by_key(add.x, 0)
+			50331662: # Shift+End
+				add.x = Global.get_end()
+				selection.on_selection_by_key(add.x, 0)
 			
-			50331661:
-				# Shift+Home
-				var c = Global.get_former_cells()
-				if len(c):
-					add.x = c.min() - Global.cell.x
-					selection.on_selection_by_key(add.x, 0)
+			50331661: # Shift+Home
+				add.x = Global.get_home()
+				selection.on_selection_by_key(add.x, 0)
 			
 			KEY_ESCAPE:
 				print("escape pressed")
@@ -80,10 +70,8 @@ func _input(event):
 			
 			KEY_ENTER, KEY_KP_ENTER:
 				# basically same as home, but jump one row down.
-				var c = Global.get_former_cells()
-				if len(c):
-					add.x = c.min() - Global.cell.x
-					add.y = 1
+				add.x = Global.get_home()
+				add.y = 1
 				selection.clear()
 			
 			KEY_SPACE:
@@ -103,18 +91,15 @@ func _input(event):
 				selection.clear()
 			
 			KEY_HOME:
-				var c = Global.get_former_cells()
-				if len(c):
-					add.x = c.min() - Global.cell.x
+				add.x = Global.get_home()
 				selection.clear()
 			
 			KEY_END:
-				var c = Global.get_upcoming_cells()
-				if len(c):
-					add.x = c.max() - Global.cell.x
+				add.x = Global.get_end()
 				selection.clear()
 			
-			268435539: # Control+S
+			268435539:
+				# Control+S
 				print('saving')
 				Global.save_matrix()
 				# Global.save_as_godot_scene()

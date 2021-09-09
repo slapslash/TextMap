@@ -155,6 +155,26 @@ func get_former_cells() -> Array:
 	return former
 
 
+func get_home() -> int:
+	"""
+	Returns the change in x coordinate to reach
+	the beginning of the current row.
+	"""
+	var c = get_former_cells()
+	if len(c):
+		return c.min() - cell.x
+	return 0
+
+func get_end() -> int:
+	"""
+	Returns the change in x coordinate to reach
+	the end of the current row.
+	"""
+	var c = get_upcoming_cells()
+	if len(c):
+		return c.max() - cell.x
+	return 0
+
 func get_cell_from_mouse_pos() -> Vector2:
 	"""
 	Get the current cell from the global mouse position.
