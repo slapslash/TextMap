@@ -95,7 +95,9 @@ func _input(event):
 				add.y = 1
 				selection.clear()
 			
-			KEY_SPACE:
+			KEY_SPACE, 33554464:
+				# Shift+Space happens sometimes, when naturally writing 
+				# and should most likely do the same then Space.
 				if selection.are_cells_selected():
 					selection.clear_selected_cells()
 				Global.push_cells()
