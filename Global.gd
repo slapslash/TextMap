@@ -1,6 +1,6 @@
 extends Node2D
 
-var font
+var font: DynamicFont
 var font_size: int = 32
 var cell_size = Vector2(0, 0)
 var cell = Vector2(0, 0)
@@ -199,7 +199,7 @@ func _draw():
 		for x in matrix[y]:
 			var to_draw = ord(matrix[y][x])
 			var pos = Vector2(x, y) * cell_size + Vector2(0, font.get_ascent())
-			font.draw_char(get_canvas_item(), pos, to_draw, -1, Color.azure)
+			var _r = font.draw_char(get_canvas_item(), pos, to_draw, -1, Color.azure)
 
 
 func save_as_godot_scene():
@@ -268,4 +268,19 @@ func load_matrix() -> Dictionary:
 		for x in mat[y]:
 			ret[float(y)][float(x)] = str(mat[y][x])
 	return ret
+
+
+func get_unique_symbols_in_matrix() -> Array:
+	"""
+	Returns sorted (ascending) array with the unique ascii/unicodes of the 
+	characters that are used in the matrix.
+	"""
+	var uniques = []
+	for y in Global.matrix:
+		for x in Global.matrix[y]:
+			var code = ord(Global.matrix[y][x])
+			if not code in uniques:
+				uniques.append(code)
+	uniques.sort()
+	return uniques
 
