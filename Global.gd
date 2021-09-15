@@ -32,12 +32,12 @@ func _ready():
 func _set_cell_size() -> Vector2:
 	"""
 	Depending on the Font, different characters could have different sizes.
-	Iterate over the ASCII-table and use the biggest char as cell-size.
+	Iterate over the available characters and use the biggest char as cell-size.
 	Non-Monospaced Fonts will not look great anyhow.
 	"""
 	var cz = Vector2.ZERO
-	for c in range(33, 127):
-		var size = font.get_char_size(c)
+	for c in font.get_available_chars():
+		var size = font.get_char_size(ord(c))
 		if size.x > cz.x:
 			cz.x = size.x
 		if size.y > cz.y:
