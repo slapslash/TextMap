@@ -12,7 +12,12 @@ var screen_size_characters: Vector2 = Vector2(30, 8)
 # and screen_size_characters.
 var screen_size_pixels: Vector2
 var show_grid: bool = true
+
 var cursor_color: Color = Color.dimgray
+var text_color: Color = Color.azure
+var grid_color: Color = Color.dimgray
+var selection_color: Color = Color.goldenrod
+var mouse_color: Color = Color.goldenrod
 
 var _drag_offset: Vector2 = Vector2.ZERO
 var _matrix_backup: Dictionary
@@ -199,7 +204,7 @@ func _draw():
 		for x in matrix[y]:
 			var to_draw = ord(matrix[y][x])
 			var pos = Vector2(x, y) * cell_size + Vector2(0, font.get_ascent())
-			var _r = font.draw_char(get_canvas_item(), pos, to_draw, -1, Color.azure)
+			var _r = font.draw_char(get_canvas_item(), pos, to_draw, -1, text_color)
 
 
 func save_as_godot_scene():

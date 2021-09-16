@@ -145,6 +145,6 @@ func _get_rect(cell_size: Vector2) -> Rect2:
 
 func _draw():
 	var rec = _get_rect(Global.cell_size)
-	var col = Color.goldenrod
+	var col = Global.selection_color
 	col.a = 0.6
 	draw_rect(rec, col)

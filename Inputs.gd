@@ -165,7 +165,7 @@ func init_custom_mouse_cursor(zoom_level: float = 1.0):
 	var width = round(Global.cell_size.x / zoom_level)
 	var height = round(Global.cell_size.y / zoom_level)
 	img.create(width, height, true, Image.FORMAT_RGBA8)
-	var col = Color.goldenrod
+	var col = Global.mouse_color
 	# set the transparancy of the cursor
 	col.a = 0.6
 	img.fill(col)
