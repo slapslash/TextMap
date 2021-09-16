@@ -28,6 +28,13 @@ window/stretch/aspect="keep"
 
 processor=false
 
+[importer_defaults]
+
+texture={
+"detect_3d": false,
+"flags/filter": false
+}
+
 [input]
 
 ui_mouse_button_left={
