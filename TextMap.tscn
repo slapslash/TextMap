@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Grid.gd" type="Script" id=1]
 [ext_resource path="res://Inputs.gd" type="Script" id=2]
 [ext_resource path="res://Camera.gd" type="Script" id=3]
 [ext_resource path="res://Selection.gd" type="Script" id=4]
+[ext_resource path="res://ExportTileMap.gd" type="Script" id=5]
+[ext_resource path="res://ExportTileMapCanvas.gd" type="Script" id=6]
 
 [node name="TextMap" type="Node2D"]
 
@@ -22,4 +24,13 @@ script = ExtResource( 3 )
 [node name="Grid" type="Node2D" parent="."]
 script = ExtResource( 1 )
 
+[node name="ExportTileMap" type="Viewport" parent="."]
+size = Vector2( 1, 1 )
+transparent_bg = true
+script = ExtResource( 5 )
+
+[node name="Canvas" type="Node2D" parent="ExportTileMap"]
+script = ExtResource( 6 )
+
+[connection signal="export_tilemap" from="Inputs" to="ExportTileMap" method="_on_Inputs_export_tilemap"]
 [connection signal="zoom_changed" from="Camera" to="Inputs" method="init_custom_mouse_cursor"]

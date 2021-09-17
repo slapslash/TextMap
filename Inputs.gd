@@ -3,6 +3,9 @@ extends Node2D
 onready var cursor: Polygon2D
 onready var selection = $Selection
 
+signal export_tilemap
+
+
 func _ready():
 	_init_cursor()
 
@@ -132,7 +135,7 @@ func _input(event):
 			268435539: # Control+S
 				print('saving')
 				Global.save_matrix()
-				# Global.save_as_godot_scene()
+				emit_signal("export_tilemap")
 			
 			_:
 				# Every other key
