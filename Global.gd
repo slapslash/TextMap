@@ -207,44 +207,6 @@ func _draw():
 			var _r = font.draw_char(get_canvas_item(), pos, to_draw, -1, text_color)
 
 
-func save_as_godot_scene():
-	# TODO: font needs to be saved/copied too.
-	var scene = Node2D.new()
-	scene.name = 'TextMap'
-	for y in matrix:
-		for x in matrix[y]:
-			var name_extension = '_' + str(y) + ',' + str(x)
-			# pos of a label is the top left corner, which matches the matrix
-			# coordinates. also the size should match cell_size ideally.
-			var label = Label.new()
-			label.set_position(Vector2(x, y) * cell_size)
-			label.set("custom_fonts/font", font)
-			label.text = matrix[y][x]
-			label.name = matrix[y][x] + name_extension
-			scene.add_child(label)
-			label.owner = scene
-
-			var body = StaticBody2D.new()
-			var coll = CollisionShape2D.new()
-			var shape = RectangleShape2D.new()
-			body.position = cell_size / 2
-			body.name = 'StaticBody2D' + name_extension
-			label.add_child(body)
-			body.owner = scene
-
-			shape.extents = cell_size / 2
-
-			coll.name = 'CollisionShape2D' + name_extension
-
-			coll.shape = shape
-			body.add_child(coll)
-			coll.owner = scene
-
-	var packed_scene = PackedScene.new()
-	packed_scene.pack(scene)
-	var _e = ResourceSaver.save("res://saved.tscn", packed_scene)
-
-
 func save_matrix():
 	var savefile = File.new()
 	savefile.open("res://saved_matrix.txt", File.WRITE)
