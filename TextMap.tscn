@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Grid.gd" type="Script" id=1]
 [ext_resource path="res://Inputs.gd" type="Script" id=2]
@@ -6,8 +6,12 @@
 [ext_resource path="res://Selection.gd" type="Script" id=4]
 [ext_resource path="res://ExportTileMap.gd" type="Script" id=5]
 [ext_resource path="res://ExportTileMapCanvas.gd" type="Script" id=6]
+[ext_resource path="res://MatrixDraw.gd" type="Script" id=7]
 
 [node name="TextMap" type="Node2D"]
+
+[node name="MatrixDraw" type="Node2D" parent="."]
+script = ExtResource( 7 )
 
 [node name="Inputs" type="Node2D" parent="."]
 script = ExtResource( 2 )

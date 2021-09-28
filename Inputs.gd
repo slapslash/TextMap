@@ -97,9 +97,6 @@ func _input(event):
 				var scene = PackedScene.new()
 				assert(scene.pack(map) == OK)
 				assert(get_tree().change_scene_to(scene) == OK)
-
-				# stop global from drawing the matrix.
-				Global.visible = false
 				
 			KEY_ESCAPE:
 				selection.clear()

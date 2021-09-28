@@ -23,6 +23,9 @@ var _drag_offset: Vector2 = Vector2.ZERO
 var _matrix_backup: Dictionary
 
 
+signal draw_matrix
+
+
 func _ready():
 	font = DynamicFont.new()
 	font.font_data = load('res://fonts/monogram_extended.ttf')
@@ -55,8 +58,8 @@ func set_cell_character(character: String):
 		matrix[cell.y][cell.x] = character
 	else:
 		matrix[cell.y] = {cell.x: character}
-	update()
-
+	emit_signal("draw_matrix")
+	
 
 func clear_cell(c = null):
 	if c == null: c = cell
@@ -65,7 +68,7 @@ func clear_cell(c = null):
 		matrix[c.y].erase(c.x)
 	if matrix[c.y].empty():
 		var _e = matrix.erase(c.y)
-	update()
+	emit_signal("draw_matrix")
 
 
 func clear_left_cell(c = null):
@@ -74,7 +77,7 @@ func clear_left_cell(c = null):
 	matrix[c.y].erase(c.x-1)
 	if matrix[c.y].empty():
 		var _e = matrix.erase(c.y)
-	update()
+	emit_signal("draw_matrix")
 
 
 func push_cells(c = null):
@@ -89,7 +92,7 @@ func push_cells(c = null):
 	for u in upcoming:
 		matrix[c.y][u+1] = matrix[c.y][u]
 		matrix[c.y].erase(u)
-	update()
+	emit_signal("draw_matrix")
 
 
 func pull_cells(c = null):
@@ -101,7 +104,7 @@ func pull_cells(c = null):
 	for u in get_upcoming_cells(c):
 		matrix[c.y][u-1] = matrix[c.y][u]
 		matrix[c.y].erase(u)
-	update()
+	emit_signal("draw_matrix")
 
 
 func start_dragging():
@@ -128,7 +131,7 @@ func drag_cells(cells: PoolVector2Array, offset: Vector2):
 				matrix[move_to.y][move_to.x] = _matrix_backup[c.y][c.x]
 			else:
 				matrix[move_to.y] = {move_to.x: _matrix_backup[c.y][c.x]}
-	update()
+	emit_signal("draw_matrix")
 
 
 func get_upcoming_cells(c = null) -> Array:
@@ -192,19 +195,7 @@ func get_cell_from_mouse_pos() -> Vector2:
 	var mpos = get_global_mouse_position()
 	var x = round((mpos.x - Global.cell_size.x / 2) / Global.cell_size.x)
 	var y = round((mpos.y - Global.cell_size.y / 2) / Global.cell_size.y)
-	return	Vector2(x, y)
-
-
-func _draw():
-	"""
-	In fact, only a changed cell needs to be drawn, but for now the
-	whole matrix is updated.
-	"""
-	for y in matrix:
-		for x in matrix[y]:
-			var to_draw = ord(matrix[y][x])
-			var pos = Vector2(x, y) * cell_size + Vector2(0, font.get_ascent())
-			var _r = font.draw_char(get_canvas_item(), pos, to_draw, -1, text_color)
+	return Vector2(x, y)
 
 
 func save_matrix():

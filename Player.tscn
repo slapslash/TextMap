@@ -23,6 +23,7 @@ polygon = PoolVector2Array( 0, 0, 12, 0, 12, 26, 0, 26 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+smoothing_enabled = true
 
 [node name="Light2D" type="Light2D" parent="."]
 texture = ExtResource( 2 )
