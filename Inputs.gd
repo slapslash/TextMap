@@ -87,6 +87,20 @@ func _input(event):
 			285212690: # Control+Down
 				selection.on_drag_by_key(0, 1)
 
+			16777244: # F1
+				var map = load("res://SavedMap.tscn").instance()
+				var player = load("res://Player.tscn").instance()
+
+				map.add_child(player)
+				player.owner = map
+				
+				var scene = PackedScene.new()
+				assert(scene.pack(map) == OK)
+				assert(get_tree().change_scene_to(scene) == OK)
+
+				# stop global from drawing the matrix.
+				Global.visible = false
+				
 			KEY_ESCAPE:
 				selection.clear()
 
