@@ -4,6 +4,7 @@ onready var cursor: Polygon2D
 onready var selection = $Selection
 
 signal export_tilemap
+signal cursor_pos_changed
 
 
 func _ready():
@@ -203,6 +204,7 @@ func _init_cursor():
 
 func _update_cursor():
 	cursor.global_position = Global.cell_size * Global.cell
+	emit_signal("cursor_pos_changed")
 
 
 func change_cell(add: Vector2):

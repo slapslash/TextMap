@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Grid.gd" type="Script" id=1]
 [ext_resource path="res://Inputs.gd" type="Script" id=2]
@@ -7,8 +7,11 @@
 [ext_resource path="res://ExportTileMap.gd" type="Script" id=5]
 [ext_resource path="res://ExportTileMapCanvas.gd" type="Script" id=6]
 [ext_resource path="res://MatrixDraw.gd" type="Script" id=7]
+[ext_resource path="res://UI.tscn" type="PackedScene" id=8]
 
 [node name="TextMap" type="Node2D"]
+
+[node name="UI" parent="." instance=ExtResource( 8 )]
 
 [node name="MatrixDraw" type="Node2D" parent="."]
 script = ExtResource( 7 )
@@ -36,5 +39,6 @@ script = ExtResource( 5 )
 [node name="Canvas" type="Node2D" parent="ExportTileMap"]
 script = ExtResource( 6 )
 
+[connection signal="cursor_pos_changed" from="Inputs" to="UI" method="_on_Inputs_cursor_pos_changed"]
 [connection signal="export_tilemap" from="Inputs" to="ExportTileMap" method="_on_Inputs_export_tilemap"]
 [connection signal="zoom_changed" from="Camera" to="Inputs" method="init_custom_mouse_cursor"]
