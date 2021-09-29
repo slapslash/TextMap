@@ -1,31 +1,50 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://light.png" type="Texture" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 5.0
-height = 10.0
+radius = 4.0
+height = 6.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "Walk"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D:polygon")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ PoolVector2Array( 0, 0, 12, 0, 12, 26, 0, 26 ), PoolVector2Array( 0, 0, 10, 0, 10, 22, 0, 26 ), PoolVector2Array( 0, 0, 12, 0, 12, 26, 0, 26 ), PoolVector2Array( 2, 0, 12, 0, 12, 26, 2, 22 ), PoolVector2Array( 0, 0, 12, 0, 12, 26, 0, 26 ) ]
+}
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color( 0.517647, 0.239216, 0.572549, 1 )
+color = Color( 0.0823529, 0.752941, 0.678431, 1 )
 offset = Vector2( -6, -13 )
 polygon = PoolVector2Array( 0, 0, 12, 0, 12, 26, 0, 26 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 2 )
+shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 smoothing_enabled = true
 
 [node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 0, 5 )
 texture = ExtResource( 2 )
 texture_scale = 0.4
 mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Walk = SubResource( 2 )
