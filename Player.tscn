@@ -21,7 +21,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ PoolVector2Array( 0, 0, 12, 0, 12, 26, 0, 26 ), PoolVector2Array( 0, 0, 10, 0, 10, 22, 0, 26 ), PoolVector2Array( 0, 0, 12, 0, 12, 26, 0, 26 ), PoolVector2Array( 2, 0, 12, 0, 12, 26, 2, 22 ), PoolVector2Array( 0, 0, 12, 0, 12, 26, 0, 26 ) ]
+"values": [ PoolVector2Array( 0, 0, 12, 0, 12, 26, 0, 26 ), PoolVector2Array( 0, -3, 10, -3, 10, 22, 0, 26 ), PoolVector2Array( 0, 0, 12, 0, 12, 26, 0, 26 ), PoolVector2Array( 2, -3, 12, -3, 12, 26, 2, 22 ), PoolVector2Array( 0, 0, 12, 0, 12, 26, 0, 26 ) ]
 }
 
 [node name="Player" type="KinematicBody2D"]
