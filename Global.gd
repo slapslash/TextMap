@@ -22,6 +22,8 @@ var mouse_color: Color = Color.goldenrod
 var _drag_offset: Vector2 = Vector2.ZERO
 var _matrix_backup: Dictionary
 
+var matrix_path = "user://saved_matrix.txt"
+var matrix_fallback_path = "res://saved_matrix.txt"
 
 signal draw_matrix
 
@@ -34,8 +36,10 @@ func _ready():
 	prints('using cell size:', cell_size)
 
 	screen_size_pixels = screen_size_characters * cell_size
-	matrix = load_matrix()
-
+	matrix = load_matrix(matrix_path)
+	if matrix.empty():
+		print("matrix not found in user directory, loading default in res://")
+		matrix = load_matrix(matrix_fallback_path)
 
 func _set_cell_size() -> Vector2:
 	"""
@@ -200,16 +204,16 @@ func get_cell_from_mouse_pos() -> Vector2:
 
 func save_matrix():
 	var savefile = File.new()
-	savefile.open("res://saved_matrix.txt", File.WRITE)
+	savefile.open(matrix_path, File.WRITE)
 	savefile.store_string(to_json(matrix))
 	savefile.close()
 
 
-func load_matrix() -> Dictionary:
+func load_matrix(path: String) -> Dictionary:
 	var savefile = File.new()
-	if not savefile.file_exists("res://saved_matrix.txt"):
+	if not savefile.file_exists(path):
 		return {}
-	savefile.open("res://saved_matrix.txt", File.READ)
+	savefile.open(path, File.READ)
 	var txt = savefile.get_as_text()
 	savefile.close()
 	if not txt:

@@ -44,7 +44,7 @@ func export_tilemap():
 	_fill_tilemap()
 	var scene = PackedScene.new()
 	assert(scene.pack(_tilemap) == OK)
-	assert(ResourceSaver.save("res://SavedMap.tscn", scene) == OK)
+	assert(ResourceSaver.save("user://SavedMap.tscn", scene) == OK)
 
 
 func _get_tile_textures() -> Dictionary:

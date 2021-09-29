@@ -89,7 +89,12 @@ func _input(event):
 				selection.on_drag_by_key(0, 1)
 
 			16777244: # F1
-				var map = load("res://SavedMap.tscn").instance()
+				# autosave, to ensure exported html5 project will work
+				# (scene at user-path needs to be written first).
+				Global.save_matrix()
+				emit_signal("export_tilemap")
+
+				var map = load("user://SavedMap.tscn").instance()
 				var player = load("res://Player.tscn").instance()
 
 				map.add_child(player)
