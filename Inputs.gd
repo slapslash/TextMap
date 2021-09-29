@@ -94,6 +94,9 @@ func _input(event):
 
 				map.add_child(player)
 				player.owner = map
+
+				# hide the mouse in the game window.
+				Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 				
 				var scene = PackedScene.new()
 				assert(scene.pack(map) == OK)
