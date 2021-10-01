@@ -22,9 +22,9 @@ var mouse_color: Color = Color.goldenrod
 var _drag_offset: Vector2 = Vector2.ZERO
 var _matrix_backup: Dictionary
 
-var matrix_path = "user://saved_matrix.txt"
-var matrix_fallback_path = "res://saved_matrix.txt"
-var project_path = "user://SavedMap.tscn"
+# when exporting the game res:// should be replaced by user:// as the export
+# will not have access to the res-folder. 
+var project_path = "res://TextMapProject.tscn"
 
 signal draw_matrix
 
@@ -37,10 +37,28 @@ func _ready():
 	prints('using cell size:', cell_size)
 
 	screen_size_pixels = screen_size_characters * cell_size
-	matrix = load_matrix(matrix_path)
-	if matrix.empty():
-		print("matrix not found in user directory, loading default in res://")
-		matrix = load_matrix(matrix_fallback_path)
+	matrix = _load_project(project_path)
+
+
+func _load_project(path: String) -> Dictionary:
+	var ret = {}
+
+	var dir = Directory.new()
+	if not dir.file_exists(path): return ret
+
+	var map = load(path).instance()
+	if not map is TileMap: return ret
+
+	var set = map.tile_set
+	if not set: return ret
+
+	for cel in map.get_used_cells():
+		var tile = set.tile_get_name(map.get_cellv(cel))
+		if cel.y in ret:
+			ret[cel.y][cel.x] = tile
+		else:
+			ret[cel.y] = {cel.x: tile}
+	return ret
 
 
 func _set_cell_size() -> Vector2:
@@ -204,45 +222,15 @@ func get_cell_from_mouse_pos() -> Vector2:
 	return Vector2(x, y)
 
 
-func save_matrix():
-	var savefile = File.new()
-	savefile.open(matrix_path, File.WRITE)
-	savefile.store_string(to_json(matrix))
-	savefile.close()
-
-
-func load_matrix(path: String) -> Dictionary:
-	var savefile = File.new()
-	if not savefile.file_exists(path):
-		return {}
-	savefile.open(path, File.READ)
-	var txt = savefile.get_as_text()
-	savefile.close()
-	if not txt:
-		return {}
-
-	var mat = parse_json(txt)
-	if not mat:
-		return {}
-	
-	# convert the json-parsed datatypes to those we need.
-	var ret = {}
-	for y in mat:
-		ret[float(y)] = {}
-		for x in mat[y]:
-			ret[float(y)][float(x)] = str(mat[y][x])
-	return ret
-
-
 func get_unique_symbols_in_matrix() -> Array:
 	"""
 	Returns sorted (ascending) array with the unique ascii/unicodes of the 
 	characters that are used in the matrix.
 	"""
 	var uniques = []
-	for y in Global.matrix:
-		for x in Global.matrix[y]:
-			var code = ord(Global.matrix[y][x])
+	for y in matrix:
+		for x in matrix[y]:
+			var code = ord(matrix[y][x])
 			if not code in uniques:
 				uniques.append(code)
 	uniques.sort()

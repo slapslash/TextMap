@@ -91,7 +91,6 @@ func _input(event):
 			16777244: # F1
 				# autosave, to ensure exported html5 project will work
 				# (scene at user-path needs to be written first).
-				Global.save_matrix()
 				emit_signal("export_tilemap")
 
 				var map = load(Global.project_path).instance()
@@ -154,7 +153,6 @@ func _input(event):
 			
 			268435539: # Control+S
 				print('saving')
-				Global.save_matrix()
 				emit_signal("export_tilemap")
 			
 			_:
