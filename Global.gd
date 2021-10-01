@@ -24,6 +24,7 @@ var _matrix_backup: Dictionary
 
 var matrix_path = "user://saved_matrix.txt"
 var matrix_fallback_path = "res://saved_matrix.txt"
+var project_path = "user://SavedMap.tscn"
 
 signal draw_matrix
 
@@ -40,6 +41,7 @@ func _ready():
 	if matrix.empty():
 		print("matrix not found in user directory, loading default in res://")
 		matrix = load_matrix(matrix_fallback_path)
+
 
 func _set_cell_size() -> Vector2:
 	"""

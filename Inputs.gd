@@ -94,7 +94,7 @@ func _input(event):
 				Global.save_matrix()
 				emit_signal("export_tilemap")
 
-				var map = load("user://SavedMap.tscn").instance()
+				var map = load(Global.project_path).instance()
 				var player = load("res://Player.tscn").instance()
 
 				map.add_child(player)
