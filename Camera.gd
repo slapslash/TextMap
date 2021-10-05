@@ -38,7 +38,7 @@ func _input(event):
 			elif event.button_index == BUTTON_WHEEL_UP and zoom.x > 0.1:
 				zoom *= 0.9
 				emit_signal("zoom_changed", zoom.x)
-			elif event.button_index == BUTTON_RIGHT:
+			elif event.button_index == BUTTON_MIDDLE:
 				if not _scroll:
 					_scroll_start = get_global_mouse_position()
 					_scroll = true
