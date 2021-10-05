@@ -10,7 +10,8 @@ func _ready():
 	# available immediately, we need to wait some time.
 	# TODO: force_draw() might be a better solution in godot 4.0
 	yield(get_tree().create_timer(0.3), "timeout")
-	_tilemap = _prepare_tilemap(_get_tile_textures())
+	var _tiles = _get_tile_textures()
+	_tilemap = _prepare_tilemap(_tiles)
 	
 	
 func _prepare_tilemap(tiles: Dictionary) -> TileMap:

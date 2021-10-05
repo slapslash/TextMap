@@ -96,6 +96,7 @@ func _input(event):
 				var map = load(Global.project_path).instance()
 				var player = load("res://Player.tscn").instance()
 
+				player.global_position = Vector2(-106, -76) * Global.cell_size
 				map.add_child(player)
 				player.owner = map
 
