@@ -11,6 +11,12 @@ func _ready():
 	_init_cursor()
 
 
+func _process(_delta):
+	if Input.is_action_pressed("ui_mouse_button_right"):
+		var mpos = Global.get_cell_from_mouse_pos()
+		Global.set_terrain(mpos)
+
+
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
@@ -21,6 +27,7 @@ func _input(event):
 				selection.on_left_mouse_button_pressed(mpos)
 			elif not event.pressed:
 				selection.on_left_mouse_button_released()
+	
 	elif event is InputEventMouseMotion:
 		selection.on_mouse_motion()
 
@@ -197,13 +204,9 @@ func init_custom_mouse_cursor(zoom_level: float = 1.0):
 
 
 func _init_cursor():
-	cursor = Polygon2D.new()
+	cursor = Global.get_cell_polygon()
 	# set cursor behind the text
 	cursor.z_index = -1
-	cursor.polygon = PoolVector2Array([Vector2(0,0),
-								Vector2(Global.cell_size.x, 0),
-								Global.cell_size,
-								Vector2(0, Global.cell_size.y)])
 	cursor.color = Global.cursor_color
 	add_child(cursor)
 	_update_cursor()

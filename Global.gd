@@ -22,6 +22,10 @@ var mouse_color: Color = Color.goldenrod
 var _drag_offset: Vector2 = Vector2.ZERO
 var _matrix_backup: Dictionary
 
+# used to determine cells, that will be drawn as non walkable terrain.
+var _terrain_character: String = "##"
+var _terrain_color: Color = Color.lightslategray
+
 # when exporting the game res:// should be replaced by user:// as the export
 # will not have access to the res-folder. 
 var project_path = "res://TextMapProject.tscn"
@@ -83,7 +87,15 @@ func set_cell_character(character: String):
 	else:
 		matrix[cell.y] = {cell.x: character}
 	emit_signal("draw_matrix")
+
 	
+func set_terrain(at_cell: Vector2):
+	if at_cell.y in matrix:
+		matrix[at_cell.y][at_cell.x] = _terrain_character
+	else:
+		matrix[at_cell.y] = {at_cell.x: _terrain_character}
+	emit_signal("draw_matrix")	
+
 
 func clear_cell(c = null):
 	if c == null: c = cell
@@ -236,3 +248,14 @@ func get_unique_symbols_in_matrix() -> Array:
 	uniques.sort()
 	return uniques
 
+
+func get_cell_polygon() -> Polygon2D:
+	"""
+	return a polygon, with the same size as a cell.
+	"""
+	var pol = Polygon2D.new()
+	pol.polygon = PoolVector2Array([Vector2(0,0),
+								Vector2(Global.cell_size.x, 0),
+								Global.cell_size,
+								Vector2(0, Global.cell_size.y)])
+	return pol
