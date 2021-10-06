@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Grid.gd" type="Script" id=1]
 [ext_resource path="res://TextLayerInputs.gd" type="Script" id=2]
@@ -6,10 +6,12 @@
 [ext_resource path="res://Selection.gd" type="Script" id=4]
 [ext_resource path="res://Font2Tiles.gd" type="Script" id=5]
 [ext_resource path="res://Font2TilesCanvas.gd" type="Script" id=6]
+[ext_resource path="res://TextMap.gd" type="Script" id=7]
 [ext_resource path="res://UI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://TextLayer.gd" type="Script" id=9]
 
 [node name="TextMap" type="Node2D"]
+script = ExtResource( 7 )
 
 [node name="UI" parent="." instance=ExtResource( 8 )]
 
@@ -42,6 +44,6 @@ script = ExtResource( 2 )
 [node name="Selection" type="Node2D" parent="Layers/TextLayer/Inputs"]
 script = ExtResource( 4 )
 
-[connection signal="zoom_changed" from="Camera" to="Layers/TextLayer/Inputs" method="init_custom_mouse_cursor"]
+[connection signal="zoom_changed" from="Camera" to="." method="_on_Camera_zoom_changed"]
 [connection signal="cursor_pos_changed" from="Layers/TextLayer/Inputs" to="UI" method="_on_Inputs_cursor_pos_changed"]
 [connection signal="export_tilemap" from="Layers/TextLayer/Inputs" to="Layers/TextLayer/Font2Tiles" method="_on_Inputs_export_tilemap"]

@@ -1,0 +1,24 @@
+extends Node2D
+
+
+func init_custom_mouse_cursor(zoom_level: float = 1.0):
+	"""
+	Change cursor to something more suitable than the standard arrow.
+	Needs to be called every time, the camera zoom changes.
+	"""
+	var tex = ImageTexture.new()
+	var img = Image.new()
+	var width = round(Global.cell_size.x / zoom_level)
+	var height = round(Global.cell_size.y / zoom_level)
+	img.create(width, height, true, Image.FORMAT_RGBA8)
+	var col = Global.mouse_color
+	# set the transparancy of the cursor
+	col.a = 0.6
+	img.fill(col)
+	tex.create_from_image(img)
+	# TODO: image's size must be lower than 256x256.
+	Input.set_custom_mouse_cursor(tex, 0, Vector2(width / 2, height / 2))
+
+
+func _on_Camera_zoom_changed(current_zoom_level):
+	init_custom_mouse_cursor(current_zoom_level)
