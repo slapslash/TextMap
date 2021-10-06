@@ -1,20 +1,21 @@
 extends Viewport
 
-var _tilemap: TileMap
+onready var _parent_map = get_parent()
 
 
 func _ready():
+	assert(_parent_map is TileMap)
 	_set_size(len(Global.font.get_available_chars()))
 	render_target_update_mode = Viewport.UPDATE_ALWAYS
 	# as _draw is called on idle and the texture after _draw also isn't
 	# available immediately, we need to wait some time.
 	# TODO: force_draw() might be a better solution in godot 4.0
-	yield(get_tree().create_timer(0.3), "timeout")
+	yield(get_tree().create_timer(0.2), "timeout")
 	var _tiles = _get_tile_textures()
-	_tilemap = _prepare_tilemap(_tiles)
+	_init_tilemap(_tiles)
+
 	
-	
-func _prepare_tilemap(tiles: Dictionary) -> TileMap:
+func _init_tilemap(tiles: Dictionary):
 	var set = TileSet.new()
 	var shape = RectangleShape2D.new()
 	shape.extents = Global.cell_size * 0.5
@@ -27,24 +28,19 @@ func _prepare_tilemap(tiles: Dictionary) -> TileMap:
 		set.tile_set_shape_offset(i, 0, Global.cell_size * 0.5)
 		i += 1
 
-	var map = TileMap.new()
-	map.name = "SavedMap"
-	map.cell_size = Global.cell_size
-	map.tile_set = set
-	return map
-
-
-func _fill_tilemap():
-	for y in Global.matrix:
-		for x in Global.matrix[y]:
-			var id = _tilemap.tile_set.find_tile_by_name(Global.matrix[y][x])
-			_tilemap.set_cell(x, y, id)
+	_parent_map.cell_size = Global.cell_size
+	_parent_map.tile_set = set
 
 
 func export_tilemap():
-	_fill_tilemap()
+	var map: TileMap = TileMap.new()
+	map.cell_size = Global.cell_size
+	map.tile_set = _parent_map.tile_set
+	for cel in _parent_map.get_used_cells():
+		map.set_cell(cel.x, cel.y, _parent_map.get_cellv(cel))
+
 	var scene = PackedScene.new()
-	assert(scene.pack(_tilemap) == OK)
+	assert(scene.pack(map) == OK)
 	assert(ResourceSaver.save(Global.project_path, scene) == OK)
 
 

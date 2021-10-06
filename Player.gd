@@ -15,6 +15,7 @@ func _ready():
 
 	VisualServer.set_default_clear_color(Color.black)
 
+
 func get_input():
 	velocity = Vector2.ZERO
 	if Input.is_action_pressed("ui_right"):
@@ -32,6 +33,7 @@ func get_input():
 	elif anim.is_playing():
 		anim.seek(0, true)
 		anim.stop()
+
 
 func _physics_process(_delta):
 	get_input()

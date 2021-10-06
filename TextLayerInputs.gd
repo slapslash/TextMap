@@ -6,15 +6,10 @@ onready var selection = $Selection
 signal export_tilemap
 signal cursor_pos_changed
 
+onready var parent_tilemap = $"/root/TextMap/Layers/TextLayer"
 
 func _ready():
 	_init_cursor()
-
-
-func _process(_delta):
-	if Input.is_action_pressed("ui_mouse_button_right"):
-		var mpos = Global.get_cell_from_mouse_pos()
-		Global.set_terrain(mpos)
 
 
 func _input(event):
@@ -76,11 +71,11 @@ func _input(event):
 				selection.on_selection_by_key(0, 1)
 
 			50331662: # Shift+End
-				add.x = Global.get_end()
+				add.x = parent_tilemap.get_end()
 				selection.on_selection_by_key(add.x, 0)
 
 			50331661: # Shift+Home
-				add.x = Global.get_home()
+				add.x = parent_tilemap.get_home()
 				selection.on_selection_by_key(add.x, 0)
 
 			285212689: # Control+Right
@@ -121,7 +116,7 @@ func _input(event):
 				if selection.are_cells_selected():
 					selection.clear_selected_cells()
 				# basically same as home, but jump one row down.
-				add.x = Global.get_home()
+				add.x = parent_tilemap.get_home()
 				add.y = 1
 				selection.clear()
 			
@@ -130,7 +125,7 @@ func _input(event):
 				# and should most likely do the same then Space.
 				if selection.are_cells_selected():
 					selection.clear_selected_cells()
-				Global.push_cells()
+				parent_tilemap.push_cells()
 				add.x = 1
 				selection.clear()
 			
@@ -138,25 +133,25 @@ func _input(event):
 				if selection.are_cells_selected():
 					selection.clear_selected_cells()
 				else:
-					Global.clear_cell()
-					Global.pull_cells()
+					parent_tilemap.clear_cell()
+					parent_tilemap.pull_cells()
 				selection.clear()
 			
 			KEY_BACKSPACE:
 				if selection.are_cells_selected():
 					selection.clear_selected_cells()
 				else:
-					Global.clear_left_cell()
-					Global.pull_cells()
+					parent_tilemap.clear_left_cell()
+					parent_tilemap.pull_cells()
 					add.x = -1
 				selection.clear()
 			
 			KEY_HOME:
-				add.x = Global.get_home()
+				add.x = parent_tilemap.get_home()
 				selection.clear()
 			
 			KEY_END:
-				add.x = Global.get_end()
+				add.x = parent_tilemap.get_end()
 				selection.clear()
 			
 			268435539: # Control+S
@@ -176,8 +171,8 @@ func _input(event):
 					if selection.are_cells_selected():
 						selection.clear_selected_cells()
 					printt(last_input, scm, ch)
-					Global.push_cells()
-					Global.set_cell_character(last_input)
+					parent_tilemap.push_cells()
+					parent_tilemap.set_cell_character(last_input)
 					add.x = 1
 					selection.clear()
 

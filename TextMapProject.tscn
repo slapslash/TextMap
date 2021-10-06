@@ -11381,7 +11381,7 @@ size = Vector2( 12, 26 )
 } ]
 315/z_index = 0
 
-[node name="SavedMap" type="TileMap"]
+[node name="" type="TileMap"]
 tile_set = SubResource( 634 )
 cell_size = Vector2( 12, 26 )
 format = 1

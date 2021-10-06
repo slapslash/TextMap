@@ -10,6 +10,7 @@ var _drag_mouse_offset: Vector2 = Vector2.ZERO
 var _change_selection_by_mouse: bool = false
 var _selected_cells: PoolVector2Array
 
+onready var parent_tilemap = $"/root/TextMap/Layers/TextLayer"
 
 func _process(_delta):
 	update()
@@ -46,8 +47,8 @@ func clear_selected_cells():
 	# start from behind, to get cell pulling right.
 	sel.invert()
 	for c in sel:
-		Global.clear_cell(c)
-		Global.pull_cells(c)
+		parent_tilemap.clear_cell(c)
+		parent_tilemap.pull_cells(c)
 	Global.cell = new_cursor_pos
 
 
@@ -69,10 +70,10 @@ func on_selection_by_key(add_x: int, add_y: int):
 
 func on_drag_by_key(add_x: int, add_y: int):
 	if not _drag_keys_start:
-		Global.start_dragging()
+		parent_tilemap.start_dragging()
 		_drag_keys_start = true
 	_drag_keys_offset += Vector2(add_x, add_y)
-	Global.drag_cells(_selected_cells, _drag_keys_offset)
+	parent_tilemap.drag_cells(_selected_cells, _drag_keys_offset)
 
 
 func on_left_mouse_button_pressed(at_cell: Vector2):
@@ -85,7 +86,7 @@ func on_left_mouse_button_pressed(at_cell: Vector2):
 		_change_selection_by_mouse = true
 	else:
 		_drag_mouse_start = at_cell
-		Global.start_dragging()
+		parent_tilemap.start_dragging()
 
 
 func on_left_mouse_button_released():
@@ -111,7 +112,7 @@ func on_mouse_motion():
 		var offset = Global.get_cell_from_mouse_pos() - _drag_mouse_start
 		if offset != _drag_mouse_offset:
 			_drag_mouse_offset = offset
-			Global.drag_cells(_selected_cells, _drag_mouse_offset)
+			parent_tilemap.drag_cells(_selected_cells, _drag_mouse_offset)
 
 
 func _set_selected_cells():
