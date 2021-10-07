@@ -5,25 +5,6 @@ var _drag_offset: Vector2 = Vector2.ZERO
 var _drag_backup: Dictionary
 
 
-func _ready():
-	# make sure to be called after the also delayed Font2Tiles child.
-	yield(get_tree().create_timer(0.3), "timeout")
-	_load_project(Global.project_path)
-
-
-func _load_project(path: String):
-	var dir = Directory.new()
-	if not dir.file_exists(path): return
-
-	var map = load(path).instance()
-	if not map is TileMap: return
-
-	tile_set = map.tile_set
-
-	for cel in map.get_used_cells():
-		set_cell(cel.x, cel.y, map.get_cellv(cel))
-
-
 func set_cell_character(character: String):
 	set_cellv(Global.cell, tile_set.find_tile_by_name(character))
 

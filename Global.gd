@@ -25,7 +25,7 @@ var _terrain_color: Color = Color.lightslategray
 # when exporting the game res:// should be replaced by user:// as the export
 # will not have access to the res-folder. 
 var project_path = "res://TextMapProject.tscn"
-
+var project_name = "TextMapProject"
 
 func _ready():
 	font = DynamicFont.new()

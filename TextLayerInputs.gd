@@ -2,9 +2,8 @@ extends Node2D
 
 onready var cursor: Polygon2D
 onready var selection = $Selection
-onready var parent_tilemap = $"/root/TextMap/Layers/TextLayer"
+onready var parent_tilemap = $"/root/TextMap/Project/TextLayer"
 
-signal export_tilemap
 signal cursor_pos_changed
 
 
@@ -89,25 +88,6 @@ func _input(event):
 
 			285212690: # Control+Down
 				selection.on_drag_by_key(0, 1)
-
-			16777244: # F1
-				# autosave, to ensure exported html5 project will work
-				# (scene at user-path needs to be written first).
-				emit_signal("export_tilemap")
-
-				var map = load(Global.project_path).instance()
-				var player = load("res://Player.tscn").instance()
-
-				player.global_position = Vector2(-106, -76) * Global.cell_size
-				map.add_child(player)
-				player.owner = map
-
-				# hide the mouse in the game window.
-				Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-				
-				var scene = PackedScene.new()
-				assert(scene.pack(map) == OK)
-				assert(get_tree().change_scene_to(scene) == OK)
 				
 			KEY_ESCAPE:
 				selection.clear()
@@ -153,11 +133,7 @@ func _input(event):
 			KEY_END:
 				add.x = parent_tilemap.get_end()
 				selection.clear()
-			
-			268435539: # Control+S
-				print('saving')
-				emit_signal("export_tilemap")
-			
+
 			_:
 				# Every other key
 				var ch = OS.get_scancode_string(scm)

@@ -32,18 +32,6 @@ func _init_tilemap(tiles: Dictionary):
 	_parent_map.tile_set = set
 
 
-func export_tilemap():
-	var map: TileMap = TileMap.new()
-	map.cell_size = Global.cell_size
-	map.tile_set = _parent_map.tile_set
-	for cel in _parent_map.get_used_cells():
-		map.set_cell(cel.x, cel.y, _parent_map.get_cellv(cel))
-
-	var scene = PackedScene.new()
-	assert(scene.pack(map) == OK)
-	assert(ResourceSaver.save(Global.project_path, scene) == OK)
-
-
 func _get_tile_textures() -> Dictionary:
 	var tiles = {}
 	var dat: Image = get_texture().get_data()
@@ -70,6 +58,3 @@ func _set_size(n_characters):
 	"""
 	size = Vector2(Global.cell_size.x * n_characters, Global.cell_size.y)
 
-
-func _on_Inputs_export_tilemap():
-	export_tilemap()

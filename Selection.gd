@@ -10,7 +10,7 @@ var _drag_mouse_offset: Vector2 = Vector2.ZERO
 var _change_selection_by_mouse: bool = false
 var _selected_cells: PoolVector2Array
 
-onready var parent_tilemap = $"/root/TextMap/Layers/TextLayer"
+onready var parent_tilemap = $"/root/TextMap/Project/TextLayer"
 
 func _process(_delta):
 	update()
