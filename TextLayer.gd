@@ -1,6 +1,6 @@
 extends TileMap
 
-export var layer_id: int = 0
+export var layer_name: String = Global.LAYER_TEXT
 
 onready var inputs = $Inputs
 
@@ -140,8 +140,8 @@ func drag_cells(cells: PoolVector2Array, offset: Vector2):
 			set_cellv(move_to, _drag_backup[c])
 
 
-func _on_TextMap_switch_layer(to_layer_id):
-	if to_layer_id == layer_id:
+func _on_TextMap_switch_layer(to_layer_name):
+	if to_layer_name == layer_name:
 		inputs.set_process_unhandled_input(true)
 		inputs.show()
 	else:

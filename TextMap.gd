@@ -1,11 +1,11 @@
 extends Node2D
 
 signal save_project
-signal switch_layer(to_layer_id)
+signal switch_layer(to_layer_name)
 
 
 func _ready():
-	emit_signal("switch_layer", 0)
+	emit_signal("switch_layer", Global.LAYER_TEXT)
 
 
 func _unhandled_key_input(event):
@@ -13,13 +13,13 @@ func _unhandled_key_input(event):
 		var scm = event.get_scancode_with_modifiers()
 		match scm:
 			16777244: # F1
-				emit_signal("switch_layer", 0)
+				emit_signal("switch_layer", Global.LAYER_TEXT)
 				
 			16777245: # F2
-				emit_signal("switch_layer", 1)
+				emit_signal("switch_layer", Global.LAYER_TERRAIN)
 			
 			16777246: # F3
-				emit_signal("switch_layer", 2)
+				pass
 
 			16777247: # F4
 				pass

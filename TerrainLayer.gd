@@ -1,6 +1,6 @@
 extends TileMap
 
-export var layer_id: int = 1
+export var layer_name: String = Global.LAYER_TERRAIN
 
 
 func _ready():
@@ -9,8 +9,8 @@ func _ready():
 
 
 
-func _on_TextMap_switch_layer(to_layer_id):
-	if to_layer_id == layer_id:
+func _on_TextMap_switch_layer(to_layer_name):
+	if to_layer_name == layer_name:
 		set_process_unhandled_input(true)
 	else:
 		set_process_unhandled_input(false)

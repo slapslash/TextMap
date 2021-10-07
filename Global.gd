@@ -27,6 +27,10 @@ var _terrain_color: Color = Color.lightslategray
 var project_path = "res://TextMapProject.tscn"
 var project_name = "TextMapProject"
 
+const LAYER_TEXT = "Text Layer"
+const LAYER_TERRAIN = "Terrain Layer"
+
+
 func _ready():
 	font = DynamicFont.new()
 	font.font_data = load('res://fonts/monogram_extended.ttf')
