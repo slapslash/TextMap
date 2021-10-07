@@ -27,9 +27,6 @@ func load_project(path: String):
 		var ext_map: TileMap = project.get_child(i)
 		var int_map: TileMap = get_child(i)
 
-		int_map.tile_set = ext_map.tile_set
-		int_map.cell_size = ext_map.cell_size
-
 		for cel in ext_map.get_used_cells():
 			int_map.set_cell(cel.x, cel.y, ext_map.get_cellv(cel))
 
