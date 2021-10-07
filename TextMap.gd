@@ -1,6 +1,11 @@
 extends Node2D
 
 signal save_project
+signal switch_layer(to_layer_id)
+
+
+func _ready():
+	emit_signal("switch_layer", 0)
 
 
 func _unhandled_key_input(event):
@@ -8,23 +13,33 @@ func _unhandled_key_input(event):
 		var scm = event.get_scancode_with_modifiers()
 		match scm:
 			16777244: # F1
-				# autosave, to ensure exported html5 project will work
-				# (scene at user-path needs to be written first).
-				emit_signal("export_tilemap")
-
-				var map = load(Global.project_path).instance()
-				var player = load("res://Player.tscn").instance()
-
-				player.global_position = Vector2(-106, -76) * Global.cell_size
-				map.add_child(player)
-				player.owner = map
-
-				# hide the mouse in the game window.
-				Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+				emit_signal("switch_layer", 0)
 				
-				var scene = PackedScene.new()
-				assert(scene.pack(map) == OK)
-				assert(get_tree().change_scene_to(scene) == OK)
+			16777245: # F2
+				emit_signal("switch_layer", 1)
+			
+			16777246: # F3
+				emit_signal("switch_layer", 2)
+
+			16777247: # F4
+				pass
+#				# autosave, to ensure exported html5 project will work
+#				# (scene at user-path needs to be written first).
+#				emit_signal("save_project")
+#
+#				var map = load(Global.project_path).instance()
+#				var player = load("res://Player.tscn").instance()
+#
+#				player.global_position = Vector2(-106, -76) * Global.cell_size
+#				map.add_child(player)
+#				player.owner = map
+#
+#				# hide the mouse in the game window.
+#				Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+#
+#				var scene = PackedScene.new()
+#				assert(scene.pack(map) == OK)
+#				assert(get_tree().change_scene_to(scene) == OK)
 			
 			268435539: # Control+S
 				print('saving project')

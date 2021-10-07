@@ -11,7 +11,7 @@ func _ready():
 	_init_cursor()
 
 
-func _input(event):
+func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
 			var mpos = Global.get_cell_from_mouse_pos()

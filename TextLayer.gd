@@ -1,5 +1,8 @@
 extends TileMap
 
+export var layer_id: int = 0
+
+onready var inputs = $Inputs
 
 var _drag_offset: Vector2 = Vector2.ZERO
 var _drag_backup: Dictionary
@@ -135,3 +138,12 @@ func drag_cells(cells: PoolVector2Array, offset: Vector2):
 		# is there a character to move?
 		if _drag_backup.has(c):
 			set_cellv(move_to, _drag_backup[c])
+
+
+func _on_TextMap_switch_layer(to_layer_id):
+	if to_layer_id == layer_id:
+		inputs.set_process_unhandled_input(true)
+		inputs.show()
+	else:
+		inputs.set_process_unhandled_input(false)
+		inputs.hide()
