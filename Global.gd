@@ -19,7 +19,7 @@ var selection_color: Color = Color.goldenrod
 var mouse_color: Color = Color.goldenrod
 
 # used to determine cells, that will be drawn as non walkable terrain.
-var terrain_color: Color = Color.lightslategray
+var terrain_color: Color = Color.azure
 
 # when exporting the game res:// should be replaced by user:// as the export
 # will not have access to the res-folder. 
@@ -28,7 +28,7 @@ var project_name = "TextMapProject"
 
 const LAYER_TEXT = "Text"
 const LAYER_TERRAIN = "Terrain"
-
+const LAYER_GAME = "Game"
 
 func _ready():
 	font = DynamicFont.new()
@@ -86,7 +86,7 @@ func get_cell_texture(col: Color) -> ImageTexture:
 	"""
 	var tex = ImageTexture.new()
 	var img = Image.new()
-	img.create(cell_size.x, cell_size.y, true, Image.FORMAT_RGBA8)
+	img.create(cell_size.x, cell_size.y, false, Image.FORMAT_RGBAF)
 	img.fill(col)
-	tex.create_from_image(img)	
+	tex.create_from_image(img)
 	return tex

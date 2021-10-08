@@ -23,23 +23,9 @@ func _unhandled_key_input(event):
 
 			16777247: # F4
 				pass
-#				# autosave, to ensure exported html5 project will work
-#				# (scene at user-path needs to be written first).
-#				emit_signal("save_project")
-#
-#				var map = load(Global.project_path).instance()
-#				var player = load("res://Player.tscn").instance()
-#
-#				player.global_position = Vector2(-106, -76) * Global.cell_size
-#				map.add_child(player)
-#				player.owner = map
-#
-#				# hide the mouse in the game window.
-#				Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-#
-#				var scene = PackedScene.new()
-#				assert(scene.pack(map) == OK)
-#				assert(get_tree().change_scene_to(scene) == OK)
+
+			16777248: # F5
+				emit_signal("switch_layer", Global.LAYER_GAME)
 			
 			268435539: # Control+S
 				print('saving project')
