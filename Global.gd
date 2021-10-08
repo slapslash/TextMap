@@ -19,8 +19,7 @@ var selection_color: Color = Color.goldenrod
 var mouse_color: Color = Color.goldenrod
 
 # used to determine cells, that will be drawn as non walkable terrain.
-var _terrain_character: String = "##"
-var _terrain_color: Color = Color.lightslategray
+var terrain_color: Color = Color.lightslategray
 
 # when exporting the game res:// should be replaced by user:// as the export
 # will not have access to the res-folder. 
@@ -79,3 +78,15 @@ func get_cell_polygon() -> Polygon2D:
 								Global.cell_size,
 								Vector2(0, Global.cell_size.y)])
 	return pol
+
+
+func get_cell_texture(col: Color) -> ImageTexture:
+	"""
+	return a ImageTexture with the same size as a cell and the given color.
+	"""
+	var tex = ImageTexture.new()
+	var img = Image.new()
+	img.create(cell_size.x, cell_size.y, true, Image.FORMAT_RGBA8)
+	img.fill(col)
+	tex.create_from_image(img)	
+	return tex
