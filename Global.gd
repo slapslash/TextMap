@@ -26,8 +26,8 @@ var terrain_color: Color = Color.lightslategray
 var project_path = "res://TextMapProject.tscn"
 var project_name = "TextMapProject"
 
-const LAYER_TEXT = "Text Layer"
-const LAYER_TERRAIN = "Terrain Layer"
+const LAYER_TEXT = "Text"
+const LAYER_TERRAIN = "Terrain"
 
 
 func _ready():

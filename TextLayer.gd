@@ -1,6 +1,6 @@
 extends TileMap
 
-export var layer_name: String = Global.LAYER_TEXT
+const layer_name: String = Global.LAYER_TEXT
 
 onready var inputs = $Inputs
 

@@ -1,6 +1,6 @@
 extends TileMap
 
-export var layer_name: String = Global.LAYER_TERRAIN
+const layer_name: String = Global.LAYER_TERRAIN
 
 var _paint: bool = false
 var _delete: bool = false

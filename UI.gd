@@ -11,4 +11,4 @@ func _on_Inputs_cursor_pos_changed():
 
 
 func _on_TextMap_switch_layer(to_layer_id):
-	current_layer_label.text = "current layer: " + str(to_layer_id)
+	current_layer_label.text = "Current Layer: " + str(to_layer_id)
