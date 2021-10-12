@@ -12,12 +12,14 @@ order need to match.
 func _ready():
 	# wait for Font2Tiles to be ready.
 	yield(get_tree().create_timer(0.3), "timeout")
-	load_project(Global.project_path)
+	if not load_project(Global.project_path):
+		print("Project not found, loading default project.")
+		assert(load_project(Global.default_project_path) == true)
 
 
-func load_project(path: String):
+func load_project(path: String) -> bool:
 	var dir = Directory.new()
-	if not dir.file_exists(path): return
+	if not dir.file_exists(path): return false
 
 	var project: Node2D = load(path).instance()
 	assert(project.get_child_count() == self.get_child_count(),
@@ -29,7 +31,7 @@ func load_project(path: String):
 
 		for cel in ext_map.get_used_cells():
 			int_map.set_cell(cel.x, cel.y, ext_map.get_cellv(cel))
-
+	return true
 
 func save_project():
 	var project = Node2D.new()
