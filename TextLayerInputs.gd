@@ -78,16 +78,20 @@ func _unhandled_input(event):
 				selection.on_selection_by_key(add.x, 0)
 
 			285212689: # Control+Right
-				selection.on_drag_by_key(1, 0)
+				if selection.are_cells_selected():
+					selection.on_drag_by_key(1, 0)
 
 			285212687: # Control+Left
-				selection.on_drag_by_key(-1, 0)
+				if selection.are_cells_selected():
+					selection.on_drag_by_key(-1, 0)
 
 			285212688: # Control+Up
-				selection.on_drag_by_key(0, -1)
+				if selection.are_cells_selected():
+					selection.on_drag_by_key(0, -1)
 
 			285212690: # Control+Down
-				selection.on_drag_by_key(0, 1)
+				if selection.are_cells_selected():
+					selection.on_drag_by_key(0, 1)
 				
 			KEY_ESCAPE:
 				selection.clear()
