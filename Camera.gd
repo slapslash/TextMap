@@ -52,6 +52,23 @@ func _process(_delta):
 		var scroll_vector = _scroll_start - get_global_mouse_position()
 		offset += scroll_vector
 
+
+func _unhandled_key_input(event):
+	if event.pressed:
+		var scm = event.get_scancode_with_modifiers()
+		match scm:
+			285212689: # Control+Right
+				offset += Vector2(1, 0) * Global.cell_size * zoom
+
+			285212687: # Control+Left
+				offset += Vector2(-1, 0) * Global.cell_size * zoom
+
+			285212688: # Control+Up
+				offset += Vector2(0, -1) * Global.cell_size * zoom
+
+			285212690: # Control+Down
+				offset += Vector2(0, 1) * Global.cell_size * zoom
+
 #func reset_offset():
 #	if offset:
 #		global_position = get_camera_screen_center()
