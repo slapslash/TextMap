@@ -69,6 +69,16 @@ func _unhandled_key_input(event):
 			285212690: # Control+Down
 				offset += Vector2(0, 1) * Global.cell_size * zoom
 
+			268435517, 285212805: # Control+Add, Control+Keypad Add
+				if zoom.x < 10:
+					zoom *= 1.1
+					emit_signal("zoom_changed", zoom.x)
+
+			268435501, 285212803: # Control+Subtract, Control+Keypad Subtract
+				if zoom.x > 0.1:
+					zoom *= 0.9
+					emit_signal("zoom_changed", zoom.x)
+
 #func reset_offset():
 #	if offset:
 #		global_position = get_camera_screen_center()
