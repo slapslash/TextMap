@@ -23,7 +23,7 @@ var terrain_color: Color = Color.azure
 
 # when exporting the game res:// should be replaced by user:// as the export
 # will not have access to the res-folder. 
-var project_path = "res://TextMapProject.tscn"
+var project_path = "user://TextMapProject.tscn"
 var default_project_path = "res://TextMapProject.tscn"
 var project_name = "TextMapProject"
 
