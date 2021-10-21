@@ -3,7 +3,7 @@ extends Node2D
 var font: DynamicFont
 var font_size: int = 32
 var cell_size = Vector2(0, 0)
-var cell = Vector2(0, 0)
+var cell: Vector2 = Vector2.ZERO
 # size of a screen in characters. will affect grid... Is calculated
 # from the cell size/ font size.
 var screen_size_characters: Vector2 = Vector2(30, 8)
@@ -23,13 +23,16 @@ var terrain_color: Color = Color.azure
 
 # when exporting the game res:// should be replaced by user:// as the export
 # will not have access to the res-folder. 
-var project_path = "user://TextMapProject.tscn"
+var project_path = "res://TextMapProject.tscn"
 var default_project_path = "res://TextMapProject.tscn"
 var project_name = "TextMapProject"
 
 const LAYER_TEXT = "Text"
 const LAYER_TERRAIN = "Terrain"
 const LAYER_GAME = "Game"
+
+
+
 
 func _ready():
 	font = DynamicFont.new()

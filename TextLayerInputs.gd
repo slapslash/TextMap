@@ -1,23 +1,16 @@
 extends Node2D
 
-onready var cursor: Polygon2D
 onready var selection = $Selection
+onready var cursor = $"/root/TextMap/Cursor"
 onready var parent_tilemap = $"/root/TextMap/Project/TextLayer"
 
-signal cursor_pos_changed
-
-
-func _ready():
-	_init_cursor()
 
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT:
-			var mpos = Global.get_cell_from_mouse_pos()
-			Global.cell = mpos
-			_update_cursor()
 			if event.pressed:
+				var mpos = Global.get_cell_from_mouse_pos()
 				selection.on_left_mouse_button_pressed(mpos)
 			elif not event.pressed:
 				selection.on_left_mouse_button_released()
@@ -78,20 +71,16 @@ func _unhandled_input(event):
 				selection.on_selection_by_key(add.x, 0)
 
 			285212689: # Control+Right
-				if selection.are_cells_selected():
-					selection.on_drag_by_key(1, 0)
+				selection.on_drag_by_key(1, 0)
 
 			285212687: # Control+Left
-				if selection.are_cells_selected():
-					selection.on_drag_by_key(-1, 0)
+				selection.on_drag_by_key(-1, 0)
 
 			285212688: # Control+Up
-				if selection.are_cells_selected():
-					selection.on_drag_by_key(0, -1)
+				selection.on_drag_by_key(0, -1)
 
 			285212690: # Control+Down
-				if selection.are_cells_selected():
-					selection.on_drag_by_key(0, 1)
+				selection.on_drag_by_key(0, 1)
 				
 			KEY_ESCAPE:
 				selection.clear()
@@ -159,21 +148,6 @@ func _unhandled_input(event):
 		change_cell(add)
 
 
-func _init_cursor():
-	cursor = Global.get_cell_polygon()
-	# set cursor behind the text
-	cursor.z_index = -1
-	cursor.color = Global.cursor_color
-	add_child(cursor)
-	_update_cursor()
-
-
-func _update_cursor():
-	cursor.global_position = Global.cell_size * Global.cell
-	emit_signal("cursor_pos_changed")
-
-
 func change_cell(add: Vector2):
 	Global.cell += add
-	_update_cursor()
-	
+	cursor.update_position()
