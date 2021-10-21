@@ -69,6 +69,9 @@ func on_selection_by_key(add_x: int, add_y: int):
 
 
 func on_drag_by_key(add_x: int, add_y: int):
+	if _start == null:
+		# no selection active
+		return
 	if not _drag_keys_start:
 		parent_tilemap.start_dragging()
 		_drag_keys_start = true
