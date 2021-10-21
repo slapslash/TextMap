@@ -2,6 +2,7 @@ extends Camera2D
 
 var _scroll: bool = false
 var _scroll_start: Vector2
+var _last_cell: Vector2
 
 signal zoom_changed(current_zoom_level)
 
@@ -45,12 +46,37 @@ func _input(event):
 
 		elif _scroll:
 			_scroll = false
-#			reset_offset()
+
 
 func _process(_delta):
 	if _scroll:
 		var scroll_vector = _scroll_start - get_global_mouse_position()
 		offset += scroll_vector
+
+	if Global.cell != _last_cell:
+		_check_scroll_cursor_edge_screen()
+		_last_cell = Global.cell
+
+
+func _check_scroll_cursor_edge_screen():
+	"""
+	check if cursor moved to edge of screen and move the workspace if so.
+	"""
+	var cursor_center_pos = Global.cell * Global.cell_size + Global.cell_size * 0.5
+	var screen_start = offset
+	var screen_end = offset + get_viewport_rect().size * zoom
+
+	if cursor_center_pos.x < screen_start.x + Global.cell_size.x:
+		offset.x += cursor_center_pos.x - screen_start.x - Global.cell_size.x
+
+	if cursor_center_pos.x > screen_end.x - Global.cell_size.x:
+		offset.x += cursor_center_pos.x - screen_end.x + Global.cell_size.x
+
+	if cursor_center_pos.y < screen_start.y + Global.cell_size.y:
+		offset.y += cursor_center_pos.y - screen_start.y - Global.cell_size.y
+
+	if cursor_center_pos.y > screen_end.y - Global.cell_size.y:
+		offset.y += cursor_center_pos.y - screen_end.y + Global.cell_size.y
 
 
 func _unhandled_key_input(event):
@@ -70,18 +96,11 @@ func _unhandled_key_input(event):
 				offset += Vector2(0, 1) * Global.cell_size * zoom
 
 			268435517, 285212805: # Control+Add, Control+Keypad Add
-				if zoom.x < 10:
-					zoom *= 1.1
-					emit_signal("zoom_changed", zoom.x)
-
-			268435501, 285212803: # Control+Subtract, Control+Keypad Subtract
 				if zoom.x > 0.1:
 					zoom *= 0.9
 					emit_signal("zoom_changed", zoom.x)
 
-#func reset_offset():
-#	if offset:
-#		global_position = get_camera_screen_center()
-#		offset = Vector2.ZERO
-##		force_update_scroll()
-##		align()
+			268435501, 285212803: # Control+Subtract, Control+Keypad Subtract
+				if zoom.x < 10:
+					zoom *= 1.1
+					emit_signal("zoom_changed", zoom.x)
