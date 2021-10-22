@@ -1,6 +1,7 @@
 extends Polygon2D
 
 
+signal cursor_pos_changed
 
 func _ready():
 	_init_cursor()
@@ -16,7 +17,7 @@ func _init_cursor():
 
 func update_position():
 	global_position = Global.cell_size * Global.cell
-
+	emit_signal("cursor_pos_changed")
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:

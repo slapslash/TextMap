@@ -64,3 +64,4 @@ script = ExtResource( 11 )
 [connection signal="switch_layer" from="." to="Project/TerrainLayer" method="_on_TextMap_switch_layer"]
 [connection signal="switch_layer" from="." to="Player" method="_on_TextMap_switch_layer"]
 [connection signal="zoom_changed" from="Camera" to="." method="_on_Camera_zoom_changed"]
+[connection signal="cursor_pos_changed" from="Cursor" to="UI" method="_on_Cursor_cursor_pos_changed"]
