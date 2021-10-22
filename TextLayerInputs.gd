@@ -21,7 +21,7 @@ func _unhandled_input(event):
 	elif event is InputEventKey and not event.pressed:
 		var scm = event.get_scancode_with_modifiers()
 		match scm:
-			16777238: # Control
+			16777238, 16777239: # Control, Cmd
 				# This special case is needed to clear selection after
 				# dragging by keys.
 				selection.clear()
@@ -70,18 +70,26 @@ func _unhandled_input(event):
 				add.x = parent_tilemap.get_home()
 				selection.on_selection_by_key(add.x, 0)
 
-			285212689: # Control+Right
+			285212689, 150994961: # Control+Right, Cmd+Right
 				selection.on_drag_by_key(1, 0)
 
-			285212687: # Control+Left
+			285212687, 150994959: # Control+Left, Cmd+Left
 				selection.on_drag_by_key(-1, 0)
 
-			285212688: # Control+Up
+			285212688, 150994960: # Control+Up, Cmd+Up
 				selection.on_drag_by_key(0, -1)
 
-			285212690: # Control+Down
+			285212690, 150994962: # Control+Down, Cmd+Down
 				selection.on_drag_by_key(0, 1)
+
+			134217771: # Cmd+Plus
+				# already used in camera, would print a + if not captured here.
+				pass
 				
+			134217773: # Cmd+Minus
+				# already used in camera, would print a - if not captured here.
+				pass
+
 			KEY_ESCAPE:
 				selection.clear()
 

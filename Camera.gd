@@ -83,24 +83,28 @@ func _unhandled_key_input(event):
 	if event.pressed:
 		var scm = event.get_scancode_with_modifiers()
 		match scm:
-			285212689: # Control+Right
+			285212689, 150994961: # Control+Right, Command+Right
 				offset += Vector2(1, 0) * Global.cell_size * zoom
 
-			285212687: # Control+Left
+			285212687, 150994959: # Control+Left, Command+Left
 				offset += Vector2(-1, 0) * Global.cell_size * zoom
 
-			285212688: # Control+Up
+			285212688, 150994960: # Control+Up, Command+Up
 				offset += Vector2(0, -1) * Global.cell_size * zoom
 
-			285212690: # Control+Down
+			285212690, 150994962: # Control+Down, Command+Down
 				offset += Vector2(0, 1) * Global.cell_size * zoom
 
-			268435517, 285212805: # Control+Add, Control+Keypad Add
+			# Control+Add, Control+Keypad Add, Command+Plus
+			268435517, 285212805, 134217771:
 				if zoom.x > 0.1:
 					zoom *= 0.9
 					emit_signal("zoom_changed", zoom.x)
+				get_tree().set_input_as_handled()
 
-			268435501, 285212803: # Control+Subtract, Control+Keypad Subtract
+			 # Control+Subtract, Control+Keypad Subtract, Command+Minus
+			268435501, 285212803, 134217773:
 				if zoom.x < 10:
 					zoom *= 1.1
 					emit_signal("zoom_changed", zoom.x)
+			

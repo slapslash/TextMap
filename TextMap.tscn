@@ -59,8 +59,8 @@ script = ExtResource( 11 )
 [node name="Player" parent="." instance=ExtResource( 12 )]
 
 [connection signal="save_project" from="." to="Project" method="_on_TextMap_save_project"]
-[connection signal="switch_layer" from="." to="Player" method="_on_TextMap_switch_layer"]
 [connection signal="switch_layer" from="." to="Project/TextLayer" method="_on_TextMap_switch_layer"]
-[connection signal="switch_layer" from="." to="Project/TerrainLayer" method="_on_TextMap_switch_layer"]
 [connection signal="switch_layer" from="." to="UI" method="_on_TextMap_switch_layer"]
+[connection signal="switch_layer" from="." to="Project/TerrainLayer" method="_on_TextMap_switch_layer"]
+[connection signal="switch_layer" from="." to="Player" method="_on_TextMap_switch_layer"]
 [connection signal="zoom_changed" from="Camera" to="." method="_on_Camera_zoom_changed"]
