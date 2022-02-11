@@ -33,12 +33,10 @@ func _initial_positioning():
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
-			if event.button_index == BUTTON_WHEEL_DOWN and zoom.x < 10:
-				zoom *= 1.1
-				emit_signal("zoom_changed", zoom.x)
-			elif event.button_index == BUTTON_WHEEL_UP and zoom.x > 0.1:
-				zoom *= 0.9
-				emit_signal("zoom_changed", zoom.x)
+			if event.button_index == BUTTON_WHEEL_DOWN:
+				_zoom_out()
+			elif event.button_index == BUTTON_WHEEL_UP:
+				_zoom_in()
 			elif event.button_index == BUTTON_MIDDLE:
 				if not _scroll:
 					_scroll_start = get_global_mouse_position()
@@ -47,6 +45,19 @@ func _input(event):
 		elif _scroll:
 			_scroll = false
 
+func _zoom_in():
+	var maxc = max(Global.cell_size.x, Global.cell_size.y)
+	# maximum allowed size of cursor, which scales with zoom is 256x256
+	if maxc / (zoom.x * 0.9) < 256:
+		zoom *= 0.9
+		emit_signal("zoom_changed", zoom.x)
+
+func _zoom_out():
+	var minc = min(Global.cell_size.x, Global.cell_size.y)
+	# minimum allowed size of cursor, which scales with zoom is >0 (rounded)
+	if minc / (zoom.x * 1.1) > 1:
+		zoom *= 1.1
+		emit_signal("zoom_changed", zoom.x)	
 
 func _process(_delta):
 	if _scroll:
@@ -97,14 +108,9 @@ func _unhandled_key_input(event):
 
 			# Control+Add, Control+Keypad Add, Command+Plus
 			268435517, 285212805, 134217771:
-				if zoom.x > 0.1:
-					zoom *= 0.9
-					emit_signal("zoom_changed", zoom.x)
-				get_tree().set_input_as_handled()
+				_zoom_in()
 
 			 # Control+Subtract, Control+Keypad Subtract, Command+Minus
 			268435501, 285212803, 134217773:
-				if zoom.x < 10:
-					zoom *= 1.1
-					emit_signal("zoom_changed", zoom.x)
+				_zoom_out()
 			
