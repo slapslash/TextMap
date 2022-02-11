@@ -38,7 +38,7 @@ format = 1
 script = ExtResource( 9 )
 
 [node name="Font2Tiles" type="Viewport" parent="Project/TextLayer"]
-size = Vector2( 1, 1 )
+size = Vector2( 2, 2 )
 transparent_bg = true
 script = ExtResource( 5 )
 
