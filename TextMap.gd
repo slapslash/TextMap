@@ -23,9 +23,6 @@ func _unhandled_key_input(event):
 
 			16777247: # F4
 				pass
-
-			16777248: # F5
-				emit_signal("switch_layer", Global.LAYER_GAME)
 			
 			268435539, 134217811: # Control+S, Cmd+S
 				print('saving project')

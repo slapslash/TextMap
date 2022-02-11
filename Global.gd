@@ -29,8 +29,6 @@ var project_name = "TextMapProject"
 
 const LAYER_TEXT = "Text"
 const LAYER_TERRAIN = "Terrain"
-const LAYER_GAME = "Game"
-
 
 
 
