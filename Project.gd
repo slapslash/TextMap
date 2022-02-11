@@ -12,14 +12,13 @@ order need to match.
 func _ready():
 	# wait for Font2Tiles to be ready.
 	yield(get_tree().create_timer(0.3), "timeout")
-	if not load_project(Global.project_path):
-		print("Project not found, loading default project.")
-		assert(load_project(Global.default_project_path) == true)
+	load_project()
 
 
-func load_project(path: String) -> bool:
+func load_project():
+	var path = Global.project_path + Global.project_name + ".tscn"
 	var dir = Directory.new()
-	if not dir.file_exists(path): return false
+	if not dir.file_exists(path): return
 
 	var project: Node2D = load(path).instance()
 	assert(project.get_child_count() == self.get_child_count(),
@@ -31,7 +30,6 @@ func load_project(path: String) -> bool:
 
 		for cel in ext_map.get_used_cells():
 			int_map.set_cell(cel.x, cel.y, ext_map.get_cellv(cel))
-	return true
 
 func save_project():
 	var project = Node2D.new()
@@ -50,7 +48,8 @@ func save_project():
 
 	var scene = PackedScene.new()
 	assert(scene.pack(project) == OK)
-	assert(ResourceSaver.save(Global.project_path, scene) == OK)
+	var path = Global.project_path + Global.project_name + ".tscn"
+	assert(ResourceSaver.save(path, scene) == OK)
 
 
 func _on_TextMap_save_project():
