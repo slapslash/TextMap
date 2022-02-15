@@ -9,16 +9,16 @@ var _drag_backup: Dictionary
 
 
 func set_cell_character(character: String):
-	set_cellv(Global.cell, tile_set.find_tile_by_name(character))
+	set_cellv(Settings.cell, tile_set.find_tile_by_name(character))
 
 
 func clear_cell(c = null):
-	if c == null: c = Global.cell
+	if c == null: c = Settings.cell
 	set_cellv(c, -1)
 
 
 func clear_left_cell(c = null):
-	if c == null: c = Global.cell
+	if c == null: c = Settings.cell
 	set_cell(c.x - 1, c.y, -1)
 
 
@@ -27,7 +27,7 @@ func push_cells(c = null):
 	Shift subsequent characters in the current row right
 	until two emtpy cells are found.
 	"""
-	if c == null: c = Global.cell
+	if c == null: c = Settings.cell
 	var upcoming = get_upcoming_cells(c)
 	# need to start from the back as n+1 is stored and would overwrite else.
 	upcoming.invert()
@@ -41,7 +41,7 @@ func get_upcoming_cells(c = null) -> Array:
 	returns the x coordinates of upcoming not empty cells in current row
 	until two empty cells are found.
 	"""
-	if c == null: c = Global.cell
+	if c == null: c = Settings.cell
 	var upcoming = []
 	var used = get_used_cells()
 	var x = c.x
@@ -56,7 +56,7 @@ func get_upcoming_cells(c = null) -> Array:
 
 
 func get_former_cells(c = null) -> Array:
-	if c == null: c = Global.cell
+	if c == null: c = Settings.cell
 	var former = []
 	var used = get_used_cells()
 	var x = c.x
@@ -75,7 +75,7 @@ func pull_cells(c = null):
 	Shift subsequent characters in the current row left
 	until two emtpy cells are found.
 	"""
-	if c == null: c = Global.cell
+	if c == null: c = Settings.cell
 	for x in get_upcoming_cells(c):
 		set_cell(x - 1, c.y, get_cell(x, c.y))
 		set_cell(x, c.y, -1)		
@@ -88,7 +88,7 @@ func get_home() -> int:
 	"""
 	var c = get_former_cells()
 	if len(c):
-		return c.min() - Global.cell.x
+		return c.min() - Settings.cell.x
 	return 0
 
 
@@ -99,7 +99,7 @@ func get_end() -> int:
 	"""
 	var c = get_upcoming_cells()
 	if len(c):
-		return c.max() - Global.cell.x
+		return c.max() - Settings.cell.x
 	return 0
 
 

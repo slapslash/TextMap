@@ -49,7 +49,7 @@ func clear_selected_cells():
 	for c in sel:
 		parent_tilemap.clear_cell(c)
 		parent_tilemap.pull_cells(c)
-	Global.cell = new_cursor_pos
+	Settings.cell = new_cursor_pos
 
 
 func on_selection_by_key(add_x: int, add_y: int):
@@ -60,9 +60,9 @@ func on_selection_by_key(add_x: int, add_y: int):
 	"""
 	if _start == null:
 		# start new selection
-		_start = Global.cell
+		_start = Settings.cell
 	if _end == null:
-		_end = Global.cell + Vector2(add_x, add_y)
+		_end = Settings.cell + Vector2(add_x, add_y)
 	else:
 		_end += Vector2(add_x, add_y)
 	_set_selected_cells()
@@ -148,7 +148,7 @@ func _get_rect(cell_size: Vector2) -> Rect2:
 
 
 func _draw():
-	var rec = _get_rect(Global.cell_size)
-	var col = Global.selection_color
+	var rec = _get_rect(Settings.cell_size)
+	var col = Settings.selection_color
 	col.a = 0.6
 	draw_rect(rec, col)

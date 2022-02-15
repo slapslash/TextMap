@@ -1,57 +1,45 @@
 extends Node2D
 
-var font: DynamicFont
-var cell_size = Vector2(0, 0)
-# size of a screen in pixels. Is calculated from the cell size/ font size
-# and screen_size_characters.
-var screen_size_pixels: Vector2
+
+# used to save last opened/recent project path
+var editor_settings_path = "user://TextMap.config"
+
+var project_directory = "res://"
+var project_name = "TestProject"
+
 
 const LAYER_TEXT = "Text"
 const LAYER_TERRAIN = "Terrain"
 
 
-var font_path = "res://fonts/monogram_extended.ttf"
-var font_size: int = 32
-var cell: Vector2 = Vector2.ZERO
-# size of a screen in characters. will affect grid.
-var screen_size_characters: Vector2 = Vector2(30, 8)
-var show_grid: bool = true
-var cursor_color: Color = Color.dimgray
-var text_color: Color = Color.azure
-var grid_color: Color = Color.dimgray
-var selection_color: Color = Color.goldenrod
-var mouse_color: Color = Color.goldenrod
-# used to determine cells, that will be drawn as non walkable terrain.
-var terrain_color: Color = Color.azure
-# when exporting the game res:// should be replaced by user:// as the export
-# will not have access to the res-folder. 
-# project_path only relates to the folder.
-var project_path = "res://"
-var project_name = "TextMapProject"
-
-
 func _ready():
-	font = DynamicFont.new()
-	font.font_data = load(font_path)
-	font.size = font_size
-	cell_size = _set_cell_size()
-	screen_size_pixels = screen_size_characters * cell_size
+	loads()
+	Settings.loads()
 
 
-func _set_cell_size() -> Vector2:
-	"""
-	Depending on the Font, different characters could have different sizes.
-	Iterate over the available characters and use the biggest char as cell-size.
-	Non-Monospaced Fonts will not look great anyhow.
-	"""
-	var cz = Vector2.ZERO
-	for c in font.get_available_chars():
-		var size = font.get_char_size(ord(c))
-		if size.x > cz.x:
-			cz.x = size.x
-		if size.y > cz.y:
-			cz.y = size.y
-	return cz
+func loads():
+	var file = File.new()
+	if file.file_exists(editor_settings_path):
+		file.open(editor_settings_path, File.READ)
+		set("project_directory", file.get_var())
+		set("project_name", file.get_var())
+		file.close()
+
+
+func saves():
+	var file = File.new()
+	file.open(editor_settings_path, File.WRITE)
+	file.store_var(project_directory)
+	file.store_var(project_name)
+	file.close()
+
+
+func get_project_path():
+	return project_directory + project_name + ".tscn"
+
+	
+func get_settings_path():
+	return project_directory + project_name + ".config"
 
 
 func get_cell_from_mouse_pos() -> Vector2:
@@ -61,8 +49,8 @@ func get_cell_from_mouse_pos() -> Vector2:
 	is based on the custom cursor and its extends.
 	"""
 	var mpos = get_global_mouse_position()
-	var x = round((mpos.x - Global.cell_size.x / 2) / Global.cell_size.x)
-	var y = round((mpos.y - Global.cell_size.y / 2) / Global.cell_size.y)
+	var x = round((mpos.x - Settings.cell_size.x / 2) / Settings.cell_size.x)
+	var y = round((mpos.y - Settings.cell_size.y / 2) / Settings.cell_size.y)
 	return Vector2(x, y)
 
 
@@ -72,9 +60,9 @@ func get_cell_polygon() -> Polygon2D:
 	"""
 	var pol = Polygon2D.new()
 	pol.polygon = PoolVector2Array([Vector2(0,0),
-								Vector2(Global.cell_size.x, 0),
-								Global.cell_size,
-								Vector2(0, Global.cell_size.y)])
+								Vector2(Settings.cell_size.x, 0),
+								Settings.cell_size,
+								Vector2(0, Settings.cell_size.y)])
 	return pol
 
 
@@ -84,7 +72,7 @@ func get_cell_texture(col: Color) -> ImageTexture:
 	"""
 	var tex = ImageTexture.new()
 	var img = Image.new()
-	img.create(cell_size.x, cell_size.y, false, Image.FORMAT_RGBAF)
+	img.create(Settings.cell_size.x, Settings.cell_size.y, false, Image.FORMAT_RGBAF)
 	img.fill(col)
 	tex.create_from_image(img)
 	return tex

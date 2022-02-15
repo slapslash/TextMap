@@ -16,7 +16,7 @@ func _ready():
 
 
 func load_project():
-	var path = Global.project_path + Global.project_name + ".tscn"
+	var path = Global.get_project_path()
 	var dir = Directory.new()
 	if not dir.file_exists(path): return
 
@@ -36,7 +36,7 @@ func save_project():
 	project.name = Global.project_name
 	for layer in get_children():
 		var map: TileMap = TileMap.new()
-		map.cell_size = Global.cell_size
+		map.cell_size = Settings.cell_size
 		map.tile_set = layer.tile_set
 		map.name = layer.name
 
@@ -48,8 +48,7 @@ func save_project():
 
 	var scene = PackedScene.new()
 	assert(scene.pack(project) == OK)
-	var path = Global.project_path + Global.project_name + ".tscn"
-	assert(ResourceSaver.save(path, scene) == OK)
+	assert(ResourceSaver.save(Global.get_project_path(), scene) == OK)
 
 
 func _on_TextMap_save_project():

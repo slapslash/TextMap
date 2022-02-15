@@ -32,14 +32,14 @@ func _unhandled_input(event):
 func _init_tilemap():
 	var set = TileSet.new()
 	var shape = RectangleShape2D.new()
-	shape.extents = Global.cell_size * 0.5
+	shape.extents = Settings.cell_size * 0.5
 	set.create_tile(0)
 	set.tile_set_name(0, "terrain")
-	set.tile_set_texture(0, Global.get_cell_texture(Global.terrain_color))
+	set.tile_set_texture(0, Global.get_cell_texture(Settings.terrain_color))
 	set.tile_set_shape(0, 0, shape)
-	set.tile_set_shape_offset(0, 0, Global.cell_size * 0.5)
+	set.tile_set_shape_offset(0, 0, Settings.cell_size * 0.5)
 
-	cell_size = Global.cell_size
+	cell_size = Settings.cell_size
 	tile_set = set
 
 

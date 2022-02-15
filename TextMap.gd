@@ -36,10 +36,10 @@ func init_custom_mouse_cursor(zoom_level: float = 1.0):
 	"""
 	var tex = ImageTexture.new()
 	var img = Image.new()
-	var width = round(Global.cell_size.x / zoom_level)
-	var height = round(Global.cell_size.y / zoom_level)
+	var width = round(Settings.cell_size.x / zoom_level)
+	var height = round(Settings.cell_size.y / zoom_level)
 	img.create(width, height, true, Image.FORMAT_RGBA8)
-	var col = Global.mouse_color
+	var col = Settings.mouse_color
 	# set the transparancy of the cursor
 	col.a = 0.6
 	img.fill(col)

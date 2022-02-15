@@ -157,5 +157,5 @@ func _unhandled_input(event):
 
 
 func change_cell(add: Vector2):
-	Global.cell += add
+	Settings.cell += add
 	cursor.update_position()

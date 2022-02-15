@@ -27,7 +27,7 @@ func _initial_positioning():
 	"""
 	position the camera, so that the first screen is centered.
 	"""
-	offset = (Global.screen_size_pixels - get_viewport_rect().size) * 0.5
+	offset = (Settings.screen_size_pixels - get_viewport_rect().size) * 0.5
 
 
 func _input(event):
@@ -46,14 +46,14 @@ func _input(event):
 			_scroll = false
 
 func _zoom_in():
-	var maxc = max(Global.cell_size.x, Global.cell_size.y)
+	var maxc = max(Settings.cell_size.x, Settings.cell_size.y)
 	# maximum allowed size of cursor, which scales with zoom is 256x256
 	if maxc / (zoom.x * 0.9) < 256:
 		zoom *= 0.9
 		emit_signal("zoom_changed", zoom.x)
 
 func _zoom_out():
-	var minc = min(Global.cell_size.x, Global.cell_size.y)
+	var minc = min(Settings.cell_size.x, Settings.cell_size.y)
 	# minimum allowed size of cursor, which scales with zoom is >0 (rounded)
 	if minc / (zoom.x * 1.1) > 1:
 		zoom *= 1.1
@@ -64,30 +64,30 @@ func _process(_delta):
 		var scroll_vector = _scroll_start - get_global_mouse_position()
 		offset += scroll_vector
 
-	if Global.cell != _last_cell:
+	if Settings.cell != _last_cell:
 		_check_scroll_cursor_edge_screen()
-		_last_cell = Global.cell
+		_last_cell = Settings.cell
 
 
 func _check_scroll_cursor_edge_screen():
 	"""
 	check if cursor moved to edge of screen and move the workspace if so.
 	"""
-	var cursor_center_pos = Global.cell * Global.cell_size + Global.cell_size * 0.5
+	var cursor_center_pos = Settings.cell * Settings.cell_size + Settings.cell_size * 0.5
 	var screen_start = offset
 	var screen_end = offset + get_viewport_rect().size * zoom
 
-	if cursor_center_pos.x < screen_start.x + Global.cell_size.x:
-		offset.x += cursor_center_pos.x - screen_start.x - Global.cell_size.x
+	if cursor_center_pos.x < screen_start.x + Settings.cell_size.x:
+		offset.x += cursor_center_pos.x - screen_start.x - Settings.cell_size.x
 
-	if cursor_center_pos.x > screen_end.x - Global.cell_size.x:
-		offset.x += cursor_center_pos.x - screen_end.x + Global.cell_size.x
+	if cursor_center_pos.x > screen_end.x - Settings.cell_size.x:
+		offset.x += cursor_center_pos.x - screen_end.x + Settings.cell_size.x
 
-	if cursor_center_pos.y < screen_start.y + Global.cell_size.y:
-		offset.y += cursor_center_pos.y - screen_start.y - Global.cell_size.y
+	if cursor_center_pos.y < screen_start.y + Settings.cell_size.y:
+		offset.y += cursor_center_pos.y - screen_start.y - Settings.cell_size.y
 
-	if cursor_center_pos.y > screen_end.y - Global.cell_size.y:
-		offset.y += cursor_center_pos.y - screen_end.y + Global.cell_size.y
+	if cursor_center_pos.y > screen_end.y - Settings.cell_size.y:
+		offset.y += cursor_center_pos.y - screen_end.y + Settings.cell_size.y
 
 
 func _unhandled_key_input(event):
@@ -95,16 +95,16 @@ func _unhandled_key_input(event):
 		var scm = event.get_scancode_with_modifiers()
 		match scm:
 			285212689, 150994961: # Control+Right, Command+Right
-				offset += Vector2(1, 0) * Global.cell_size * zoom
+				offset += Vector2(1, 0) * Settings.cell_size * zoom
 
 			285212687, 150994959: # Control+Left, Command+Left
-				offset += Vector2(-1, 0) * Global.cell_size * zoom
+				offset += Vector2(-1, 0) * Settings.cell_size * zoom
 
 			285212688, 150994960: # Control+Up, Command+Up
-				offset += Vector2(0, -1) * Global.cell_size * zoom
+				offset += Vector2(0, -1) * Settings.cell_size * zoom
 
 			285212690, 150994962: # Control+Down, Command+Down
-				offset += Vector2(0, 1) * Global.cell_size * zoom
+				offset += Vector2(0, 1) * Settings.cell_size * zoom
 
 			# Control+Add, Control+Keypad Add, Command+Plus
 			268435517, 285212805, 134217771:
