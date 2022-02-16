@@ -6,7 +6,6 @@ func _ready():
 
 
 func show():
-	Input.set_custom_mouse_cursor(null)
 	popup_centered_ratio(0.75)
 
 

@@ -27,6 +27,7 @@ func _unhandled_key_input(event):
 				pass
 			
 			268435539, 134217811: # Control+S, Cmd+S
+				Input.set_custom_mouse_cursor(null)
 				if Global.project_name == "":
 					saveas.show()
 					# wait until dialog is closed
@@ -35,8 +36,8 @@ func _unhandled_key_input(event):
 				Global.saves()
 				Settings.saves()
 				emit_signal("save_project")
-
-
+				init_custom_mouse_cursor()
+		
 
 func init_custom_mouse_cursor(zoom_level: float = 1.0):
 	"""
