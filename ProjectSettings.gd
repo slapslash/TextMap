@@ -1,6 +1,8 @@
 extends Node
 
 # SETTINGS, THAT GET SAVED.
+var camera_zoom: Vector2 = Vector2.ONE
+var camera_offset: Vector2 = Vector2.ZERO
 var font: DynamicFont
 var cell_size = Vector2(0, 0)
 # size of a screen in pixels. Is calculated from the cell size/ font size
