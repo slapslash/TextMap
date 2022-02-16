@@ -11,5 +11,5 @@ func show():
 
 func _on_file_selected(path):
 	# current dir is missing drive by now.
-	Global.project_directory = path.rstrip(current_file)
-	Global.project_name = current_file.rstrip(".tscn")
+	Global.project_directory = path.trim_suffix(current_file)
+	Global.project_name = current_file.trim_suffix(".tscn")
