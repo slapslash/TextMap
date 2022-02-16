@@ -3,11 +3,6 @@ extends Node
 # SETTINGS, THAT GET SAVED.
 var camera_zoom: Vector2 = Vector2.ONE
 var camera_offset: Vector2 = Vector2.ZERO
-var font: DynamicFont
-var cell_size = Vector2(0, 0)
-# size of a screen in pixels. Is calculated from the cell size/ font size
-# and screen_size_characters.
-var screen_size_pixels: Vector2
 var font_path = "res://fonts/monogram_extended.ttf"
 var font_size: int = 32
 var cell: Vector2 = Vector2.ZERO
@@ -22,12 +17,20 @@ var mouse_color: Color = Color.goldenrod
 # used to determine cells, that will be drawn as non walkable terrain.
 var terrain_color: Color = Color.azure
 
-	
+# SETTINGS, THAT GET CALCULATED AND NOT SAVED
+var font: DynamicFont
+var cell_size = Vector2(0, 0)
+# size of a screen in pixels. Is calculated from the cell size/ font size
+# and screen_size_characters.
+var screen_size_pixels: Vector2
+
+
 func loads():
 	var config = ConfigFile.new()
-	if not config.load(Global.get_project_settings_path()) == OK: return
-	for p in get_script().get_script_property_list():
-		set(p["name"], config.get_value("project_settings", p["name"]))
+	if config.load(Global.get_project_settings_path()) == OK:
+		for p in get_script().get_script_property_list():
+			if not p["name"] in ["font", "cell_size", "screen_size_pixels"]:
+				set(p["name"], config.get_value("project_settings", p["name"]))
 	_setup_properties()
 	
 	
@@ -43,7 +46,8 @@ func saves():
 	if Global.project_name == "": return
 	var config = ConfigFile.new()
 	for p in get_script().get_script_property_list():
-		config.set_value("project_settings", p["name"], get(p["name"]))
+		if not p["name"] in ["font", "cell_size", "screen_size_pixels"]:
+			config.set_value("project_settings", p["name"], get(p["name"]))
 	config.save(Global.get_project_settings_path())
 
 
