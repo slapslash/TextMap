@@ -16,6 +16,7 @@ var selection_color: Color = Color.goldenrod
 var mouse_color: Color = Color.goldenrod
 # used to determine cells, that will be drawn as non walkable terrain.
 var terrain_color: Color = Color.azure
+var background_color: Color = Color(0.3, 0.3, 0.3, 1.0)
 
 # SETTINGS, THAT GET CALCULATED AND NOT SAVED
 var font: DynamicFont
@@ -32,7 +33,7 @@ func loads():
 			if not p["name"] in ["font", "cell_size", "screen_size_pixels"]:
 				set(p["name"], config.get_value("project_settings", p["name"]))
 	_setup_properties()
-	
+	VisualServer.set_default_clear_color(background_color)
 	
 func _setup_properties():
 	font = DynamicFont.new()
