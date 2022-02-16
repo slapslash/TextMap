@@ -18,25 +18,23 @@ func _ready():
 
 
 func loads():
+	var config = ConfigFile.new()
+	if not config.load(_editor_settings_path) == OK: return
+	project_directory = config.get_value("project", "project_directory")
+	project_name = config.get_value("project", "project_name")
+	# recheck if project still exists
 	var file = File.new()
-	if file.file_exists(_editor_settings_path):
-		file.open(_editor_settings_path, File.READ)
-		set("project_directory", file.get_var())
-		set("project_name", file.get_var())
-		# recheck if project still exists
-		if not file.file_exists(get_project_path()):
-			project_directory = ""
-			project_name = ""
-		file.close()
+	if not file.file_exists(get_project_path()):
+		project_directory = ""
+		project_name = ""
 
 
 func saves():
 	if project_name == "": return
-	var file = File.new()
-	file.open(_editor_settings_path, File.WRITE)
-	file.store_var(project_directory)
-	file.store_var(project_name)
-	file.close()
+	var config = ConfigFile.new()
+	config.set_value("project", "project_directory", project_directory)
+	config.set_value("project", "project_name", project_name)
+	config.save(_editor_settings_path)
 
 
 func get_project_path():

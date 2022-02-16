@@ -24,12 +24,10 @@ var terrain_color: Color = Color.azure
 
 	
 func loads():
-	var file = File.new()
-	if file.file_exists(Global.get_project_settings_path()):
-		file.open(Global.get_project_settings_path(), File.READ)
-		for p in get_script().get_script_property_list():
-			set(p["name"], file.get_var())
-		file.close()
+	var config = ConfigFile.new()
+	if not config.load(Global.get_project_settings_path()) == OK: return
+	for p in get_script().get_script_property_list():
+		set(p["name"], config.get_value("project_settings", p["name"]))
 	_setup_properties()
 	
 	
@@ -43,11 +41,10 @@ func _setup_properties():
 
 func saves():
 	if Global.project_name == "": return
-	var file = File.new()
-	file.open(Global.get_project_settings_path(), File.WRITE)
+	var config = ConfigFile.new()
 	for p in get_script().get_script_property_list():
-		file.store_var(get(p["name"]))
-	file.close()
+		config.set_value("project_settings", p["name"], get(p["name"]))
+	config.save(Global.get_project_settings_path())
 
 
 func _set_cell_size() -> Vector2:
