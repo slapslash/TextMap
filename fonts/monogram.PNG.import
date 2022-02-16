@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/monogram.PNG-4a541a7ef2b62fcbdead317ba20b3f2a.stex"
+path="res://.import/monogram.png-8bed1c29f87a538e8fb98c9d350ae923.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://fonts/monogram.PNG"
-dest_files=[ "res://.import/monogram.PNG-4a541a7ef2b62fcbdead317ba20b3f2a.stex" ]
+source_file="res://fonts/monogram.png"
+dest_files=[ "res://.import/monogram.png-8bed1c29f87a538e8fb98c9d350ae923.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -28,7 +28,8 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
