@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var saveas = $SaveAsLayer/SaveAs
+onready var saveas = $UI/SaveAs
 
 signal save_project
 signal switch_layer(to_layer_name)
