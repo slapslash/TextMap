@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var saveas = $SaveAsLayer/SaveAs
+
 signal save_project
 signal switch_layer(to_layer_name)
 
@@ -25,8 +27,15 @@ func _unhandled_key_input(event):
 				pass
 			
 			268435539, 134217811: # Control+S, Cmd+S
-				print('saving project')
+				if Global.project_name == "":
+					saveas.show()
+					# wait until dialog is closed
+					yield(saveas, "hide")
+				
+				Global.saves()
+				Settings.saves()
 				emit_signal("save_project")
+
 
 
 func init_custom_mouse_cursor(zoom_level: float = 1.0):

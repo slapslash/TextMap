@@ -30,7 +30,7 @@ func _initial_positioning():
 	offset = (Settings.screen_size_pixels - get_viewport_rect().size) * 0.5
 
 
-func _input(event):
+func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed:
 			if event.button_index == BUTTON_WHEEL_DOWN:

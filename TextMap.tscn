@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Grid.gd" type="Script" id=1]
 [ext_resource path="res://TextLayerInputs.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://TextLayer.gd" type="Script" id=9]
 [ext_resource path="res://Project.gd" type="Script" id=10]
 [ext_resource path="res://TerrainLayer.gd" type="Script" id=11]
+[ext_resource path="res://SaveAs.gd" type="Script" id=12]
 [ext_resource path="res://Cursor.gd" type="Script" id=13]
 
 [node name="TextMap" type="Node2D"]
@@ -54,6 +55,26 @@ script = ExtResource( 4 )
 [node name="TerrainLayer" type="TileMap" parent="Project"]
 format = 1
 script = ExtResource( 11 )
+
+[node name="SaveAsLayer" type="CanvasLayer" parent="."]
+
+[node name="SaveAs" type="FileDialog" parent="SaveAsLayer"]
+margin_left = 28.0
+margin_top = 40.0
+margin_right = 526.0
+margin_bottom = 338.0
+popup_exclusive = true
+window_title = "Save Project"
+mode_overrides_title = false
+access = 2
+filters = PoolStringArray( "*.tscn" )
+current_dir = "/DSUsers/uidu1158/_projects/godot/TextMap"
+current_file = "TextMapProject"
+current_path = "/DSUsers/uidu1158/_projects/godot/TextMap/TextMapProject"
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="save_project" from="." to="Project" method="_on_TextMap_save_project"]
 [connection signal="switch_layer" from="." to="UI" method="_on_TextMap_switch_layer"]

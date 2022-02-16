@@ -32,6 +32,7 @@ func load_project():
 			int_map.set_cell(cel.x, cel.y, ext_map.get_cellv(cel))
 
 func save_project():
+	if Global.project_name == "": return
 	var project = Node2D.new()
 	project.name = Global.project_name
 	for layer in get_children():

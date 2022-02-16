@@ -23,8 +23,8 @@ var terrain_color: Color = Color.azure
 	
 func loads():
 	var file = File.new()
-	if file.file_exists(Global.get_settings_path()):
-		file.open(Global.get_settings_path(), File.READ)
+	if file.file_exists(Global.get_project_settings_path()):
+		file.open(Global.get_project_settings_path(), File.READ)
 		for p in get_script().get_script_property_list():
 			set(p["name"], file.get_var())
 		file.close()
@@ -40,10 +40,10 @@ func _setup_properties():
 
 
 func saves():
+	if Global.project_name == "": return
 	var file = File.new()
-	file.open(Global.get_settings_path(), File.WRITE)
+	file.open(Global.get_project_settings_path(), File.WRITE)
 	for p in get_script().get_script_property_list():
-		prints(p, p["name"], get(p["name"]))
 		file.store_var(get(p["name"]))
 	file.close()
 

@@ -137,17 +137,18 @@ func _unhandled_input(event):
 
 			_:
 				# Every other key
-				var ch = OS.get_scancode_string(scm)
+				var _ch = OS.get_scancode_string(scm)
 				var last_input = char(event.unicode)
 				if last_input == '':
+					pass
 					# most likely some unhandled function key.
-					printt("function key pressed:", ch, scm)
+#					printt("function key pressed:", ch, scm)
 				elif last_input != " ":
 					# Safety check if input is not space. There are cases like
 					# Shift+Space and Control+Space, that would cause this.
 					if selection.are_cells_selected():
 						selection.clear_selected_cells()
-					printt(last_input, scm, ch)
+#					printt(last_input, scm, _ch)
 					parent_tilemap.push_cells()
 					parent_tilemap.set_cell_character(last_input)
 					add.x = 1

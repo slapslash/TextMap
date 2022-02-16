@@ -2,10 +2,10 @@ extends Node2D
 
 
 # used to save last opened/recent project path
-var editor_settings_path = "user://TextMap.config"
+var _editor_settings_path = "user://TextMap.config"
 
-var project_directory = "res://"
-var project_name = "TestProject"
+var project_directory = ""
+var project_name = ""
 
 
 const LAYER_TEXT = "Text"
@@ -19,16 +19,21 @@ func _ready():
 
 func loads():
 	var file = File.new()
-	if file.file_exists(editor_settings_path):
-		file.open(editor_settings_path, File.READ)
+	if file.file_exists(_editor_settings_path):
+		file.open(_editor_settings_path, File.READ)
 		set("project_directory", file.get_var())
 		set("project_name", file.get_var())
+		# recheck if project still exists
+		if not file.file_exists(get_project_path()):
+			project_directory = ""
+			project_name = ""
 		file.close()
 
 
 func saves():
+	if project_name == "": return
 	var file = File.new()
-	file.open(editor_settings_path, File.WRITE)
+	file.open(_editor_settings_path, File.WRITE)
 	file.store_var(project_directory)
 	file.store_var(project_name)
 	file.close()
@@ -38,7 +43,7 @@ func get_project_path():
 	return project_directory + project_name + ".tscn"
 
 	
-func get_settings_path():
+func get_project_settings_path():
 	return project_directory + project_name + ".config"
 
 
