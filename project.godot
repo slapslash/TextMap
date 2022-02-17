@@ -22,7 +22,9 @@ Settings="*res://ProjectSettings.gd"
 
 [display]
 
-window/size/width=800
+window/size/width=480
+window/size/height=270
+window/size/borderless=true
 window/stretch/aspect="keep"
 
 [global]
@@ -52,5 +54,6 @@ ui_mouse_button_right={
 [rendering]
 
 2d/snapping/use_gpu_pixel_snap=true
+environment/default_clear_color=Color( 0, 0.101832, 0.109375, 1 )
 environment/default_environment="res://default_env.tres"
 quality/2d/use_pixel_snap=true

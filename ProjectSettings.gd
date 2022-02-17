@@ -7,7 +7,7 @@ var font_path = "res://fonts/monogram_extended.ttf"
 var font_size: int = 32
 var cell: Vector2 = Vector2.ZERO
 # size of a screen in characters. will affect grid.
-var screen_size_characters: Vector2 = Vector2(30, 8)
+var screen_size_characters: Vector2 = Vector2(32, 9)
 var show_grid: bool = true
 var cursor_color: Color = Color.dimgray
 var text_color: Color = Color.azure
@@ -16,8 +16,8 @@ var selection_color: Color = Color.goldenrod
 var mouse_color: Color = Color.goldenrod
 # used to determine cells, that will be drawn as non walkable terrain.
 var terrain_color: Color = Color.azure
-var background_color: Color = Color(0.3, 0.3, 0.3, 1.0)
-
+# var background_color: Color = Color(0.3, 0.3, 0.3, 1.0) # standard godot.
+var background_color: Color = Color(0.1, 0.1, 0.1, 1.0)
 # SETTINGS, THAT GET CALCULATED AND NOT SAVED
 var font: DynamicFont
 var cell_size = Vector2(0, 0)
