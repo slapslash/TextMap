@@ -23,8 +23,7 @@ Settings="*res://ProjectSettings.gd"
 [display]
 
 window/size/width=800
-window/size/height=450
-window/size/borderless=true
+window/size/height=480
 window/stretch/aspect="keep"
 
 [global]
