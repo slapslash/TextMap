@@ -1,6 +1,12 @@
 # TextMap
 Is a grid/cell based text editor saving your project natively to a TileMap usable in the Godot game engine.
 
+The Editor:
+![](readme_welcome.png "TextMap")
+
+The exported TileMap:
+![](readme_tilemap.png "TileMap")
+
 ## Intention
 The idea that drove me to do this project is a reimagination of old text adventures (interactive fiction) like zork, where the world is described
 with text and you had to enter commands to control your character and your actions.  
@@ -13,10 +19,10 @@ But this is just one idea that could be realized with this editor.
 * Text entered in a line will not affect text that come later in the same line except it's immediately adjacent (less that two empty cells).
 * Every character of text entered will use the same amount of space.
 
-## Saves as tile map
+## Save to tile map
 * The selected font will be converted to a tile set.
 * Collision shapes will be added to all used cells.
-* TileSet nodes will be created for all layers (text, terrain) and saved as Godots text scene format (TSCN).
+* TileSet nodes will be created for all layers (text, terrain) and saved in Godots text scene format (TSCN).
 
 ## Usage
 You can run and use the editor inside Godot. Most likely however you want to export it to a standalone executable first
