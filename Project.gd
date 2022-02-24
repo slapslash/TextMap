@@ -35,11 +35,15 @@ func save_project():
 	if Global.project_name == "": return
 	var project = Node2D.new()
 	project.name = Global.project_name
-	for layer in get_children():
+	for layer_name in ["TextLayer", "TerrainLayer"]:
+		var layer = get_node(layer_name)
 		var map: TileMap = TileMap.new()
-		map.cell_size = Settings.cell_size
+		if layer_name == "TextLayer":
+			map.cell_size = Settings.cell_size_font
+		elif layer_name == "TerrainLayer":
+			map.cell_size = Settings.cell_size_terrain
 		map.tile_set = layer.tile_set
-		map.name = layer.name
+		map.name = layer_name
 
 		for cel in layer.get_used_cells():
 			map.set_cell(cel.x, cel.y, layer.get_cellv(cel))
