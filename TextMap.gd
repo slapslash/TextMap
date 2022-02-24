@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var saveas = $UI/SaveAs
+onready var camera = $Camera
 
 signal save_project
 signal switch_layer(to_layer_name)
@@ -43,11 +44,15 @@ func _unhandled_key_input(event):
 				emit_signal("save_project")
 		
 
-func init_custom_mouse_cursor(zoom_level: float = 1.0):
+func init_custom_mouse_cursor():
 	"""
 	Change cursor to something more suitable than the standard arrow.
 	Needs to be called every time, the camera zoom changes.
 	"""
+	var zoom_level = 1.0
+	# camera might not be initialized yet.
+	if camera:
+		zoom_level = camera.zoom.x
 	var tex = ImageTexture.new()
 	var img = Image.new()
 	var width = round(Settings.cell_size.x / zoom_level)
@@ -61,5 +66,5 @@ func init_custom_mouse_cursor(zoom_level: float = 1.0):
 	Input.set_custom_mouse_cursor(tex, 0, Vector2(width / 2, height / 2))
 
 
-func _on_Camera_zoom_changed(current_zoom_level):
-	init_custom_mouse_cursor(current_zoom_level)
+func _on_Camera_zoom_changed():
+	init_custom_mouse_cursor()

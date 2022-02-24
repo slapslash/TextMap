@@ -4,7 +4,7 @@ var _scroll: bool = false
 var _scroll_start: Vector2
 var _last_cell: Vector2
 
-signal zoom_changed(current_zoom_level)
+signal zoom_changed()
 
 """
 Node to enable zooming, scrolling (moving with right mouse button)
@@ -22,7 +22,7 @@ func _ready():
 	else:
 		offset = Settings.camera_offset
 	zoom = Settings.camera_zoom
-	emit_signal("zoom_changed", zoom.x)
+	emit_signal("zoom_changed")
 
 
 func _initial_positioning():
@@ -53,7 +53,7 @@ func _zoom_in():
 	# maximum allowed size of cursor, which scales with zoom is 256x256
 	if maxc / (zoom.x * 0.9) < 256:
 		zoom *= 0.9
-		emit_signal("zoom_changed", zoom.x)
+		emit_signal("zoom_changed")
 		Settings.camera_zoom = zoom
 
 
@@ -62,7 +62,7 @@ func _zoom_out():
 	# minimum allowed size of cursor, which scales with zoom is >0 (rounded)
 	if minc / (zoom.x * 1.1) > 1:
 		zoom *= 1.1
-		emit_signal("zoom_changed", zoom.x)	
+		emit_signal("zoom_changed")
 		Settings.camera_zoom = zoom
 
 
