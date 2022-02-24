@@ -7,7 +7,7 @@ var font_path = "res://fonts/monogram_extended.ttf"
 var font_size: int = 128
 var cell: Vector2 = Vector2.ZERO
 # size of a screen in characters. will affect grid.
-var screen_size_characters: Vector2 = Vector2(32, 9)
+var screen_size_characters: Vector2 = Vector2(15, 5)
 var show_grid: bool = true
 var cursor_color: Color = Color.dimgray
 var text_color: Color = Color.azure
