@@ -42,7 +42,7 @@ func loads():
 	var config = ConfigFile.new()
 	if config.load(Global.get_project_settings_path()) == OK:
 		for p in get_script().get_script_property_list():
-			if not p["name"] in ["font", "cell_size", "screen_size_pixels"]:
+			if not p["name"] in ["font", "cell_size", "cell_size_text", "cell_size_terrain", "screen_size_pixels"]:
 				set(p["name"], config.get_value("project_settings", p["name"]))
 	_setup_properties()
 	VisualServer.set_default_clear_color(background_color)
@@ -61,7 +61,7 @@ func saves():
 	if Global.project_name == "": return
 	var config = ConfigFile.new()
 	for p in get_script().get_script_property_list():
-		if not p["name"] in ["font", "cell_size", "screen_size_pixels"]:
+		if not p["name"] in ["font", "cell_size", "cell_size_text", "cell_size_terrain", "screen_size_pixels"]:
 			config.set_value("project_settings", p["name"], get(p["name"]))
 	config.save(Global.get_project_settings_path())
 
