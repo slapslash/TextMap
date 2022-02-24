@@ -16,14 +16,22 @@ var selection_color: Color = Color.goldenrod
 var mouse_color: Color = Color.goldenrod
 # used to determine cells, that will be drawn as non walkable terrain.
 var terrain_color: Color = Color.azure
+# set size of terrain tiles besed on cell size used for text.
+var terrain_size_factor: Vector2 = Vector2(1.0, 0.5)
 # var background_color: Color = Color(0.3, 0.3, 0.3, 1.0) # standard godot.
 var background_color: Color = Color(0.1, 0.1, 0.1, 1.0)
 # complex collision will wrap a collision polygon around every single character,
 # representing the individual shape of every character.
 # simple collision will just create a rectangle collision shape with the size of a cell.
 var use_complex_collision: bool = true
+
 # SETTINGS, THAT GET CALCULATED AND NOT SAVED
 var font: DynamicFont
+# helper variable to remember cell size for text layer.
+var cell_size_font: Vector2
+# helper variable to remember cell size for terrain layer.
+var cell_size_terrain: Vector2
+# current cell size, will change when switching layer. 
 var cell_size = Vector2(0, 0)
 # size of a screen in pixels. Is calculated from the cell size/ font size
 # and screen_size_characters.
@@ -44,6 +52,8 @@ func _setup_properties():
 	font.font_data = load(font_path)
 	font.size = font_size
 	cell_size = _set_cell_size()
+	cell_size_font = cell_size
+	cell_size_terrain = cell_size * terrain_size_factor
 	screen_size_pixels = screen_size_characters * cell_size
 
 

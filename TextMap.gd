@@ -15,9 +15,13 @@ func _unhandled_key_input(event):
 		var scm = event.get_scancode_with_modifiers()
 		match scm:
 			16777244: # F1
+				Settings.cell_size = Settings.cell_size_font
+				init_custom_mouse_cursor()
 				emit_signal("switch_layer", Global.LAYER_TEXT)
 				
 			16777245: # F2
+				Settings.cell_size = Settings.cell_size_terrain
+				init_custom_mouse_cursor()
 				emit_signal("switch_layer", Global.LAYER_TERRAIN)
 			
 			16777246: # F3

@@ -32,15 +32,27 @@ func _unhandled_input(event):
 func _init_tilemap():
 	var set = TileSet.new()
 	var shape = RectangleShape2D.new()
-	shape.extents = Settings.cell_size * 0.5
+	shape.extents = Settings.cell_size_terrain * 0.5
 	set.create_tile(0)
 	set.tile_set_name(0, "terrain")
-	set.tile_set_texture(0, Global.get_cell_texture(Settings.terrain_color))
+	set.tile_set_texture(0, get_cell_texture(Settings.terrain_color))
 	set.tile_set_shape(0, 0, shape)
-	set.tile_set_shape_offset(0, 0, Settings.cell_size * 0.5)
+	set.tile_set_shape_offset(0, 0, Settings.cell_size_terrain * 0.5)
 
-	cell_size = Settings.cell_size
+	cell_size = Settings.cell_size_terrain
 	tile_set = set
+
+
+func get_cell_texture(col: Color) -> ImageTexture:
+	"""
+	return a ImageTexture with the same size as a cell and the given color.
+	"""
+	var tex = ImageTexture.new()
+	var img = Image.new()
+	img.create(Settings.cell_size_terrain.x, Settings.cell_size_terrain.y, false, Image.FORMAT_RGBAF)
+	img.fill(col)
+	tex.create_from_image(img)
+	return tex
 
 
 func _on_TextMap_switch_layer(to_layer_name):

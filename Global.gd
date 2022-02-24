@@ -67,15 +67,3 @@ func get_cell_polygon() -> Polygon2D:
 								Settings.cell_size,
 								Vector2(0, Settings.cell_size.y)])
 	return pol
-
-
-func get_cell_texture(col: Color) -> ImageTexture:
-	"""
-	return a ImageTexture with the same size as a cell and the given color.
-	"""
-	var tex = ImageTexture.new()
-	var img = Image.new()
-	img.create(Settings.cell_size.x, Settings.cell_size.y, false, Image.FORMAT_RGBAF)
-	img.fill(col)
-	tex.create_from_image(img)
-	return tex
