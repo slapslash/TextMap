@@ -28,7 +28,7 @@ var use_complex_collision: bool = true
 # SETTINGS, THAT GET CALCULATED AND NOT SAVED
 var font: DynamicFont
 # helper variable to remember cell size for text layer.
-var cell_size_font: Vector2
+var cell_size_text: Vector2
 # helper variable to remember cell size for terrain layer.
 var cell_size_terrain: Vector2
 # current cell size, will change when switching layer. 
@@ -52,7 +52,7 @@ func _setup_properties():
 	font.font_data = load(font_path)
 	font.size = font_size
 	cell_size = _set_cell_size()
-	cell_size_font = cell_size
+	cell_size_text = cell_size
 	cell_size_terrain = cell_size * terrain_size_factor
 	screen_size_pixels = screen_size_characters * cell_size
 

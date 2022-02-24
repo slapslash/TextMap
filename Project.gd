@@ -39,7 +39,7 @@ func save_project():
 		var layer = get_node(layer_name)
 		var map: TileMap = TileMap.new()
 		if layer_name == "TextLayer":
-			map.cell_size = Settings.cell_size_font
+			map.cell_size = Settings.cell_size_text
 		elif layer_name == "TerrainLayer":
 			map.cell_size = Settings.cell_size_terrain
 		map.tile_set = layer.tile_set
