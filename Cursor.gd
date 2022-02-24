@@ -25,3 +25,12 @@ func _unhandled_input(event):
 			var mpos = Global.get_cell_from_mouse_pos()
 			Settings.cell = mpos
 			update_position()
+
+
+func _on_TextMap_switch_layer(to_layer_name):
+	if to_layer_name == Global.LAYER_TEXT:
+		set_process_unhandled_input(true)
+		show()
+	elif to_layer_name == Global.LAYER_TERRAIN:
+		set_process_unhandled_input(false)
+		hide()
