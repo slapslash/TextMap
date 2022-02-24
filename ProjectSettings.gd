@@ -4,7 +4,7 @@ extends Node
 var camera_zoom: Vector2 = Vector2.ONE
 var camera_offset: Vector2 = Vector2.ZERO
 var font_path = "res://fonts/monogram_extended.ttf"
-var font_size: int = 32
+var font_size: int = 128
 var cell: Vector2 = Vector2.ZERO
 # size of a screen in characters. will affect grid.
 var screen_size_characters: Vector2 = Vector2(32, 9)
@@ -18,6 +18,10 @@ var mouse_color: Color = Color.goldenrod
 var terrain_color: Color = Color.azure
 # var background_color: Color = Color(0.3, 0.3, 0.3, 1.0) # standard godot.
 var background_color: Color = Color(0.1, 0.1, 0.1, 1.0)
+# complex collision will wrap a collision polygon around every single character,
+# representing the individual shape of every character.
+# simple collision will just create a rectangle collision shape with the size of a cell.
+var use_complex_collision: bool = true
 # SETTINGS, THAT GET CALCULATED AND NOT SAVED
 var font: DynamicFont
 var cell_size = Vector2(0, 0)

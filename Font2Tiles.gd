@@ -24,8 +24,24 @@ func _init_tilemap(tiles: Dictionary):
 		set.create_tile(i)
 		set.tile_set_name(i, chr)
 		set.tile_set_texture(i, tiles[chr])
-		set.tile_set_shape(i, 0, shape)
-		set.tile_set_shape_offset(i, 0, Settings.cell_size * 0.5)
+
+		# set collision shape
+		if Settings.use_complex_collision:
+			var bm = BitMap.new()
+			bm.create_from_image_alpha(tiles[chr].get_data(), 0.1)
+			# dilation avoids small pieces getting no collision.
+			bm.grow_mask(1, Rect2(Vector2.ZERO, Settings.cell_size))
+			var polygons = bm.opaque_to_polygons(Rect2(Vector2.ZERO, Settings.cell_size), 1.0)
+			var shape_id = 0
+			for p in polygons:
+				var poly = ConvexPolygonShape2D.new()
+				poly.points = p
+				set.tile_set_shape(i, shape_id, poly)
+			shape_id += 1
+		else:
+			set.tile_set_shape(i, 0, shape)
+			set.tile_set_shape_offset(i, 0, Settings.cell_size * 0.5)
+
 		i += 1
 
 	_parent_map.cell_size = Settings.cell_size
@@ -41,11 +57,11 @@ func _get_tile_textures() -> Dictionary:
 		var tile = dat.get_rect(Rect2(Vector2(x, 0), Settings.cell_size))
 		# convert to preserve transparency
 		tile.convert(Image.FORMAT_RGBA8)
+		# filter characters, that are not visible (like space).
 		if not tile.is_invisible():
 			var tex = ImageTexture.new()
 			# disable standard flags.
 			tex.create_from_image(tile, 0)
-			# filter characters, that are not visible (like space).
 			tiles[chr] = tex
 		x += Settings.cell_size.x
 	return tiles
