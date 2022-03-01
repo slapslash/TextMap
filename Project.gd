@@ -40,6 +40,7 @@ func save_project():
 		var map: TileMap = TileMap.new()
 		if layer_name == "TextLayer":
 			map.cell_size = Settings.cell_size_text
+			map.modulate = Settings.text_color
 		elif layer_name == "TerrainLayer":
 			map.cell_size = Settings.cell_size_terrain
 		map.tile_set = layer.tile_set

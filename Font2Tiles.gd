@@ -44,6 +44,7 @@ func _init_tilemap(tiles: Dictionary):
 
 		i += 1
 
+	_parent_map.modulate = Settings.text_color
 	_parent_map.cell_size = Settings.cell_size
 	_parent_map.tile_set = set
 
@@ -56,7 +57,7 @@ func _get_tile_textures() -> Dictionary:
 	for chr in Settings.font.get_available_chars():
 		var tile = dat.get_rect(Rect2(Vector2(x, 0), Settings.cell_size))
 		# convert to preserve transparency
-		tile.convert(Image.FORMAT_RGBA8)
+		tile.convert(Image.FORMAT_LA8)
 		# filter characters, that are not visible (like space).
 		if not tile.is_invisible():
 			var tex = ImageTexture.new()
