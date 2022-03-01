@@ -49,7 +49,7 @@ func init_custom_mouse_cursor():
 	Change cursor to something more suitable than the standard arrow.
 	Needs to be called every time, the camera zoom changes.
 	"""
-	var zoom_level = 1.0
+	var zoom_level = Settings.camera_zoom.x
 	# camera might not be initialized yet.
 	if camera:
 		zoom_level = camera.zoom.x
