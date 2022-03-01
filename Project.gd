@@ -41,9 +41,11 @@ func save_project():
 		if layer_name == "TextLayer":
 			map.cell_size = Settings.cell_size_text
 			map.modulate = Settings.text_color
+			map.tile_set = tileset_with_only_used_tiles_from(layer)
 		elif layer_name == "TerrainLayer":
 			map.cell_size = Settings.cell_size_terrain
-		map.tile_set = layer.tile_set
+			map.tile_set = layer.tile_set
+
 		map.name = layer_name
 
 		for cel in layer.get_used_cells():
@@ -57,5 +59,16 @@ func save_project():
 	assert(ResourceSaver.save(Global.get_project_path(), scene) == OK)
 
 
+func tileset_with_only_used_tiles_from(map: TileMap) -> TileSet:
+	"""
+	remove tiles from tileset, that are not used in the parent tilemap.
+	"""
+	var set = map.tile_set.duplicate()
+	for id in set.get_tiles_ids():
+		if map.get_used_cells_by_id(id).empty():
+			set.remove_tile(id)
+	return set
+	
+	
 func _on_TextMap_save_project():
 	save_project()
