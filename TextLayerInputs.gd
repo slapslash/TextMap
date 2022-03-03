@@ -142,7 +142,7 @@ func _unhandled_input(event):
 				if last_input == '':
 					pass
 					# most likely some unhandled function key.
-#					printt("function key pressed:", ch, scm)
+#					printt("function key pressed:", _ch, scm)
 				elif last_input != " ":
 					# Safety check if input is not space. There are cases like
 					# Shift+Space and Control+Space, that would cause this.

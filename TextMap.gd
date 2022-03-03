@@ -31,6 +31,10 @@ func _unhandled_key_input(event):
 			16777247: # F4
 				pass
 			
+			16777254: # F11
+				# toggle fullscreen
+				OS.window_fullscreen = not OS.window_fullscreen
+			
 			268435539, 134217811: # Control+S, Cmd+S
 				if Global.project_name == "":
 					Input.set_custom_mouse_cursor(null)
